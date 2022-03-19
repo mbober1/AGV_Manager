@@ -1,1 +1,1 @@
-# PWR_Algorytmy_optymalizacji
+# PWR Algorytmy optymalizacji
