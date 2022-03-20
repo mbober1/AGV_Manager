@@ -41,19 +41,20 @@ Scene::Scene(QWidget *parent)
 
 }
 
+
 void Scene::paintEvent(QPaintEvent *event)
 {
-    for (Robot agv : this->robots)
+    for (Robot &agv : this->robots)
     {
         QPainter painter(this);
 
-        if (agv.path_points.size() != 0)
+        if (agv.get_path().empty() == false)
         {
             // drawing paths
             QPainterPath path;
-            path.moveTo(agv.path_points.front());
+            path.moveTo(agv.get_position());
 
-            for (auto point : agv.path_points)
+            for (auto &point : agv.get_path())
             {
                 path.lineTo(point + agv.drawing_offset);
             }
@@ -62,29 +63,61 @@ void Scene::paintEvent(QPaintEvent *event)
             painter.drawPath(path);
 
 
-            // drawing first and last point
+            // drawing last point
             painter.setBrush(QBrush(agv.SecondColor));
-            painter.drawEllipse(agv.path_points.front() + agv.drawing_offset, this->point_size, this->point_size);
-            painter.drawEllipse(agv.path_points.back() + agv.drawing_offset, this->point_size, this->point_size);
+            painter.drawEllipse(agv.get_path().back() + agv.drawing_offset, this->point_size, this->point_size);
         }
 
 
         // drawing actuall position
         painter.setPen(QPen(agv.MainColor, this->line_size, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
         painter.setBrush(QBrush(agv.MainColor));
-        painter.drawEllipse(agv.position + agv.drawing_offset, this->point_size, this->point_size);
+        painter.drawEllipse(agv.get_position() + agv.drawing_offset, this->point_size, this->point_size);
 
     }
-
-
 }
+
 
 void Scene::animation_update()
 {
 
-    for (int i = 0; i < this->robots.size(); i++)
+    for (Robot &agv : this->robots)
     {
-        robots[i].position += QPoint(1,1);
+        if (agv.get_path().empty())
+        {
+            agv.clear_path();
+            break;
+        }
+
+        auto position = agv.get_position();
+        auto next_point = agv.get_path().first();
+
+        // drop point you are in
+        if (position == next_point)
+        {
+            agv.checkpoint();
+        }
+
+        // animate X axis
+        if (position.x() > next_point.x())
+        {
+            agv.move(QPoint(-1, 0));
+        }
+        else if (position.x() < next_point.x())
+        {
+            agv.move(QPoint(1, 0));
+        }
+
+        // animate Y axis
+        if (position.y() > next_point.y())
+        {
+            agv.move(QPoint(0, -1));
+        }
+        else if (position.y() < next_point.y())
+        {
+            agv.move(QPoint(0, 1));
+        }
+
     }
 
     repaint();

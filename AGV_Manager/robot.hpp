@@ -8,14 +8,23 @@
 class Robot
 {
 public:
-    Robot(QPoint home_position, QPoint drawing_offset, QColor MainColor, QColor SecondColor);
+    Robot(const QPoint &home_position, const QPoint &drawing_offset, const QColor &MainColor, const QColor &SecondColor);
+    const QVector<QPoint> &get_path();
+    const QPoint &get_position();
+    void add_point(const QPoint &point);
+    void move(const QPoint &vector);
+    void checkpoint();
+    void clear_path();
 
-    QPoint position;
     QPoint drawing_offset;
-    QVector<QPoint> path_points;
     QColor MainColor;
     QColor SecondColor;
 
+private:
+    QPoint position;
+    QVector<QPoint> path_points_show;
+    int get_len(const QPoint &point1, const QPoint &point2);
+    int get_path_len();
 };
 
 #endif // ROBOT_HPP
