@@ -15,7 +15,10 @@
 #define ROBOT_BLUE_SECOND_COLOR     QColor(0x29, 0xB6, 0xF6, 0xAA)
 #define ROBOT_BLUE_HOME             QPoint(50,250)
 
-
+  
+/*!
+ * \brief Constructor Scene Class
+ */
 Scene::Scene(QWidget *parent)
     : QWidget{parent},
       animation_timer(new QTimer(this))
@@ -44,6 +47,9 @@ Scene::Scene(QWidget *parent)
 }
 
 
+/*!
+ * \brief Overload of Virtual function. Its executed every time sth change on screen
+ */
 void Scene::paintEvent(QPaintEvent *event)
 {
     for (Robot &agv : this->robots)
@@ -81,6 +87,9 @@ void Scene::paintEvent(QPaintEvent *event)
 }
 
 
+/*!
+ * \brief This function run when timer overflow.
+ */
 void Scene::animation_update()
 {
 
@@ -125,6 +134,6 @@ void Scene::animation_update()
 
     repaint();
 
-    emit test(this->robots[0].get_progress());
+    emit test(this->robots[0].get_progress()); // TO DO
 
 }

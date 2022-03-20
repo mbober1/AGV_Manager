@@ -27,8 +27,6 @@ private:
     QVector<QPoint> path_points_show;
     int get_len(const QPoint &point1, const QPoint &point2);
 
-
-    int test_len;
 };
 
 #endif // ROBOT_HPP
