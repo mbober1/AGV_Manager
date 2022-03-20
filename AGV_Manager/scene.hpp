@@ -2,17 +2,20 @@
 #define SCENE_HPP
 
 #include <QWidget>
+#include "robot.hpp"
 
 class Scene : public QWidget
 {
     Q_OBJECT
 public:
     explicit Scene(QWidget *parent = nullptr);
-
     virtual void paintEvent(QPaintEvent *event);
 
 private:
-    QVector<QLine> lines;
+    QVector<Robot> robots;
+    int point_size = 8;
+    int line_size = 7;
+
 signals:
 
 };

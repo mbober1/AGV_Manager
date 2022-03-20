@@ -11,10 +11,12 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    robot.cpp \
     scene.cpp
 
 HEADERS += \
     mainwindow.hpp \
+    robot.hpp \
     scene.hpp
 
 FORMS += \
