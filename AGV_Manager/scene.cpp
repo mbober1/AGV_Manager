@@ -25,7 +25,11 @@ Scene::Scene(QWidget *parent)
     this->setAutoFillBackground(true);
 
     QPalette palette = this->palette();
-    palette.setBrush(QPalette::Window, QBrush(QPixmap(":/image/resources/images/Warehouse.png").scaled(this->size(),Qt::IgnoreAspectRatio, Qt::SmoothTransformation)));//Use smooth zoom
+    palette.setBrush(QPalette::Window,
+                     QBrush(QPixmap(":/image/resources/images/Warehouse.png").scaled(this->size(),
+                     Qt::IgnoreAspectRatio,
+                     Qt::SmoothTransformation)));
+
     this->setPalette(palette);
     this->show();
 
