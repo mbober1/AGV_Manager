@@ -15,6 +15,8 @@ public:
     void move(const QPoint &vector);
     void checkpoint();
     void clear_path();
+    int get_path_len();
+    int get_progress();
 
     QPoint drawing_offset;
     QColor MainColor;
@@ -24,7 +26,9 @@ private:
     QPoint position;
     QVector<QPoint> path_points_show;
     int get_len(const QPoint &point1, const QPoint &point2);
-    int get_path_len();
+
+
+    int test_len;
 };
 
 #endif // ROBOT_HPP

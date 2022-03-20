@@ -47,13 +47,30 @@ int Robot::get_path_len()
 
     if (point_count > 1)
     {
+        lenght += get_len(this->get_position(), this->path_points_show[0]);
+
         for(int i = 0; i < point_count - 1; i++)
         {
             lenght += get_len(this->path_points_show[i], this->path_points_show[i + 1]);
         }
+
     }
 
     return lenght;
+}
+
+int Robot::get_progress()
+{
+    static int start = get_path_len();
+
+    if ( start == 0 )
+    {
+        return 100;
+    }
+    else
+    {
+        return 100 - (get_path_len() * 100 / start);
+    }
 }
 
 void Robot::add_point(const QPoint &point)

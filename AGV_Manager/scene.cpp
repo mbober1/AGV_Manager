@@ -75,6 +75,7 @@ void Scene::paintEvent(QPaintEvent *event)
         painter.drawEllipse(agv.get_position() + agv.drawing_offset, this->point_size, this->point_size);
 
     }
+
 }
 
 
@@ -121,5 +122,7 @@ void Scene::animation_update()
     }
 
     repaint();
+
+    emit test(this->robots[0].get_progress());
 
 }

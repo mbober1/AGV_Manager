@@ -14,3 +14,8 @@ ListItem::~ListItem()
 {
     delete ui;
 }
+
+void ListItem::update_progress(int progress)
+{
+    ui->progressBar->setValue(progress);
+}

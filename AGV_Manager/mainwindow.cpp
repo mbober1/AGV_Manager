@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    connect(scene, &Scene::test, this, &MainWindow::test);
+
     add_list_item("Task #1", "AGV Red");
     add_list_item("Task #2", "AGV Green");
     add_list_item("Task #3", "AGV Blue");
@@ -33,7 +35,15 @@ void MainWindow::add_list_item(QString title, QString robot)
 {
     QListWidgetItem *listWidgetItem = new QListWidgetItem(ui->listWidget);
     ui->listWidget->addItem(listWidgetItem);
+
     ListItem *theWidgetItem = new ListItem(title, robot, this);
     listWidgetItem->setSizeHint(theWidgetItem->sizeHint ());
     ui->listWidget->setItemWidget(listWidgetItem, theWidgetItem);
+
+    this->list_items.append(theWidgetItem);
+}
+
+void MainWindow::test(int progress)
+{
+    list_items.at(0)->update_progress(progress);
 }

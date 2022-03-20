@@ -15,6 +15,9 @@ public:
     explicit ListItem(QString title, QString robot, QWidget *parent = nullptr);
     ~ListItem();
 
+public slots:
+    void update_progress(int progress);
+
 private:
     Ui::ListItem *ui;
 };

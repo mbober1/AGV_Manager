@@ -21,6 +21,7 @@ private:
     void animation_update();
 
 signals:
+    void test(int progress);
 
 };
 
