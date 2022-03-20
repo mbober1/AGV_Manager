@@ -18,6 +18,9 @@ MainWindow::MainWindow(QWidget *parent)
     add_list_item("Task #1", "AGV Red");
     add_list_item("Task #2", "AGV Green");
     add_list_item("Task #3", "AGV Blue");
+    add_list_item("Task #4", "Not assigned");
+    add_list_item("Task #5", "Not assigned");
+    add_list_item("Task #6", "Not assigned");
 
 }
 

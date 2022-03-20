@@ -15,6 +15,7 @@ public:
     QVector<QPoint> path_points;
     QColor MainColor;
     QColor SecondColor;
+
 };
 
 #endif // ROBOT_HPP

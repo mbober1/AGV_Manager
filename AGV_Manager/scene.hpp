@@ -2,6 +2,7 @@
 #define SCENE_HPP
 
 #include <QWidget>
+#include <QTimer>
 #include "robot.hpp"
 
 class Scene : public QWidget
@@ -13,8 +14,11 @@ public:
 
 private:
     QVector<Robot> robots;
+    QTimer* animation_timer;
     int point_size = 8;
     int line_size = 6;
+
+    void animation_update();
 
 signals:
 
