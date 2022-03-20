@@ -3,19 +3,18 @@
 #include <QPainterPath>
 #include <QBrush>
 
-#define BACKGROUND_COLOR QColor(42, 42, 42)
+#define ROBOT_RED_FIRST_COLOR       QColor(0xB7, 0x1C, 0x1C)
+#define ROBOT_RED_SECOND_COLOR      QColor(0xEF, 0x53, 0x50, 0xAA)
+#define ROBOT_RED_HOME              QPoint(50,150)
 
-#define ROBOT_RED_FIRST_COLOR QColor(0xB7, 0x1C, 0x1C)
-#define ROBOT_RED_SECOND_COLOR QColor(0xEF, 0x53, 0x50, 0xAA)
-#define ROBOT_RED_HOME QPoint(50,150)
+#define ROBOT_GREEN_FIRST_COLOR     QColor(0x1B, 0x5E, 0x20)
+#define ROBOT_GREEN_SECOND_COLOR    QColor(0x66, 0xBB, 0x6A, 0xAA)
+#define ROBOT_GREEN_HOME            QPoint(50,50)
 
-#define ROBOT_GREEN_FIRST_COLOR QColor(0x1B, 0x5E, 0x20)
-#define ROBOT_GREEN_SECOND_COLOR QColor(0x66, 0xBB, 0x6A, 0xAA)
-#define ROBOT_GREEN_HOME QPoint(50,50)
+#define ROBOT_BLUE_FIRST_COLOR      QColor(0x01, 0x57, 0x9B)
+#define ROBOT_BLUE_SECOND_COLOR     QColor(0x29, 0xB6, 0xF6, 0xAA)
+#define ROBOT_BLUE_HOME             QPoint(50,250)
 
-#define ROBOT_BLUE_FIRST_COLOR QColor(0x01, 0x57, 0x9B)
-#define ROBOT_BLUE_SECOND_COLOR QColor(0x29, 0xB6, 0xF6, 0xAA)
-#define ROBOT_BLUE_HOME QPoint(50,250)
 
 Scene::Scene(QWidget *parent)
     : QWidget{parent},
@@ -26,7 +25,6 @@ Scene::Scene(QWidget *parent)
     this->setAutoFillBackground(true);
 
     QPalette palette = this->palette();
-    palette.setColor(QPalette::Window, BACKGROUND_COLOR);
     palette.setBrush(QPalette::Window, QBrush(QPixmap(":/image/resources/images/Warehouse.png").scaled(this->size(),Qt::IgnoreAspectRatio, Qt::SmoothTransformation)));//Use smooth zoom
     this->setPalette(palette);
     this->show();
