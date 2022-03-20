@@ -14,7 +14,7 @@ public:
 private:
     QVector<Robot> robots;
     int point_size = 8;
-    int line_size = 7;
+    int line_size = 6;
 
 signals:
 

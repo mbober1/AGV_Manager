@@ -15,6 +15,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void add_list_item(QString title, QString robot);
 
 private:
     Ui::MainWindow *ui;
