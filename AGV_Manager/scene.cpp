@@ -5,15 +5,15 @@
 
 #define ROBOT_RED_FIRST_COLOR       QColor(0xB7, 0x1C, 0x1C)
 #define ROBOT_RED_SECOND_COLOR      QColor(0xEF, 0x53, 0x50, 0xAA)
-#define ROBOT_RED_HOME              QPoint(50,150)
+#define ROBOT_RED_HOME              QPoint(50,50)
 
 #define ROBOT_GREEN_FIRST_COLOR     QColor(0x1B, 0x5E, 0x20)
 #define ROBOT_GREEN_SECOND_COLOR    QColor(0x66, 0xBB, 0x6A, 0xAA)
-#define ROBOT_GREEN_HOME            QPoint(50,50)
+#define ROBOT_GREEN_HOME            QPoint(50,150)
 
 #define ROBOT_BLUE_FIRST_COLOR      QColor(0x01, 0x57, 0x9B)
 #define ROBOT_BLUE_SECOND_COLOR     QColor(0x29, 0xB6, 0xF6, 0xAA)
-#define ROBOT_BLUE_HOME             QPoint(50,250)
+#define ROBOT_BLUE_HOME             QPoint(50,270)
 
   
 /*!
@@ -36,13 +36,37 @@ Scene::Scene(QWidget *parent)
     this->setPalette(palette);
     this->show();
 
-    this->robots.append(Robot(ROBOT_RED_HOME, QPoint(0,0), ROBOT_RED_FIRST_COLOR, ROBOT_RED_SECOND_COLOR));
-    this->robots.append(Robot(ROBOT_GREEN_HOME, QPoint(2,2), ROBOT_GREEN_FIRST_COLOR, ROBOT_GREEN_SECOND_COLOR));
-    this->robots.append(Robot(ROBOT_BLUE_HOME, QPoint(4,4), ROBOT_BLUE_FIRST_COLOR, ROBOT_BLUE_SECOND_COLOR));
 
+
+    this->robots.append(Robot(ROBOT_RED_HOME, QPoint(0,0), ROBOT_RED_FIRST_COLOR, ROBOT_RED_SECOND_COLOR));
+    this->robots.append(Robot(ROBOT_GREEN_HOME, QPoint(0,0), ROBOT_GREEN_FIRST_COLOR, ROBOT_GREEN_SECOND_COLOR));
+    this->robots.append(Robot(ROBOT_BLUE_HOME, QPoint(0,0), ROBOT_BLUE_FIRST_COLOR, ROBOT_BLUE_SECOND_COLOR));
+
+
+    this->robots[0].add_point(QPoint(940, 50));
+    this->robots[0].add_point(QPoint(940, 270));
+    this->robots[0].add_point(QPoint(250, 270));
+    this->robots[0].add_point(QPoint(250, 600));
+    this->robots[0].add_point(QPoint(750, 600));
+    this->robots[0].add_point(QPoint(750, 630));
+
+    this->robots[1].add_point(QPoint(590, 150));
+    this->robots[1].add_point(QPoint(590, 270));
+    this->robots[1].add_point(QPoint(940, 270));
+    this->robots[1].add_point(QPoint(940, 600));
+    this->robots[1].add_point(QPoint(750, 600));
+    this->robots[1].add_point(QPoint(750, 630));
+
+    this->robots[2].add_point(QPoint(590, 270));
+    this->robots[2].add_point(QPoint(590, 380));
+    this->robots[2].add_point(QPoint(250, 380));
+    this->robots[2].add_point(QPoint(250, 600));
+    this->robots[2].add_point(QPoint(750, 600));
+    this->robots[2].add_point(QPoint(750, 630));
 
     connect(animation_timer, &QTimer::timeout, this, &Scene::animation_update);
-    animation_timer->start(17); // about 60 FPS
+//    animation_timer->start(17); // about 60 FPS
+    animation_timer->start(7); // about 60 FPS
 
 }
 
@@ -95,41 +119,37 @@ void Scene::animation_update()
 
     for (Robot &agv : this->robots)
     {
-        if (agv.get_path().empty())
+        if (agv.get_path().empty() == false)
         {
-            agv.clear_path();
-            break;
-        }
+            auto position = agv.get_position();
+            auto next_point = agv.get_path().first();
 
-        auto position = agv.get_position();
-        auto next_point = agv.get_path().first();
+            // drop point you are in
+            if (position == next_point)
+            {
+                agv.checkpoint();
+            }
 
-        // drop point you are in
-        if (position == next_point)
-        {
-            agv.checkpoint();
-        }
+            // animate X axis
+            if (position.x() > next_point.x())
+            {
+                agv.move(QPoint(-1, 0));
+            }
+            else if (position.x() < next_point.x())
+            {
+                agv.move(QPoint(1, 0));
+            }
 
-        // animate X axis
-        if (position.x() > next_point.x())
-        {
-            agv.move(QPoint(-1, 0));
+            // animate Y axis
+            if (position.y() > next_point.y())
+            {
+                agv.move(QPoint(0, -1));
+            }
+            else if (position.y() < next_point.y())
+            {
+                agv.move(QPoint(0, 1));
+            }
         }
-        else if (position.x() < next_point.x())
-        {
-            agv.move(QPoint(1, 0));
-        }
-
-        // animate Y axis
-        if (position.y() > next_point.y())
-        {
-            agv.move(QPoint(0, -1));
-        }
-        else if (position.y() < next_point.y())
-        {
-            agv.move(QPoint(0, 1));
-        }
-
     }
 
     repaint();

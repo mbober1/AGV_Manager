@@ -24,7 +24,7 @@ public:
 
 private:
     QPoint position;
-    QVector<QPoint> path_points_show;
+    QVector<QPoint> path_points;
     int get_len(const QPoint &point1, const QPoint &point2);
 
 };
