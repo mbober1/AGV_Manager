@@ -2,7 +2,7 @@
 #define MAINWINDOW_HPP
 
 #include <QMainWindow>
-#include "listitem.hpp"
+#include "taskitem.hpp"
 #include "scene.hpp"
 
 QT_BEGIN_NAMESPACE
@@ -16,7 +16,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void add_list_item(QString title, QString robot);
+    void add_list_item(QString robot);
 
 public slots:
     void test(int progress);
@@ -24,7 +24,7 @@ public slots:
 private:
     Ui::MainWindow *ui;
     Scene* scene;
-    QVector<ListItem*> list_items;
+    QVector<TaskItem*> list_items;
 
 };
 #endif // MAINWINDOW_HPP
