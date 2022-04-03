@@ -5,6 +5,11 @@
 /*!
  * \brief Constructor Robot Class
  */
+Robot::Robot()
+{
+
+}
+
 Robot::Robot(const QPoint &home_position, const QPoint &drawing_offset, const QColor &MainColor, const QColor &SecondColor) :
     drawing_offset(drawing_offset),
     MainColor(MainColor),
