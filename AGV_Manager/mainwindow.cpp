@@ -3,7 +3,6 @@
 
 #include <QListWidget>
 #include <QPalette>
-#include <listitem.hpp>
 
 
 #define BACKGROUND_COLOR QColor(42, 42, 42)
@@ -17,12 +16,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(scene, &Scene::test, this, &MainWindow::test);
 
-    add_list_item("Task #1", "AGV Red");
-    add_list_item("Task #2", "AGV Green");
-    add_list_item("Task #3", "AGV Blue");
-    add_list_item("Task #4", "Not assigned");
-    add_list_item("Task #5", "Not assigned");
-    add_list_item("Task #6", "Not assigned");
+    add_list_item("AGV Red");
+    add_list_item("AGV Green");
+    add_list_item("AGV Blue");
+    add_list_item("Not assigned");
+    add_list_item("Not assigned");
+    add_list_item("Not assigned");
 
 }
 
@@ -31,12 +30,12 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::add_list_item(QString title, QString robot)
+void MainWindow::add_list_item(QString robot)
 {
     QListWidgetItem *listWidgetItem = new QListWidgetItem(ui->listWidget);
     ui->listWidget->addItem(listWidgetItem);
 
-    ListItem *theWidgetItem = new ListItem(title, robot, this);
+    TaskItem *theWidgetItem = new TaskItem(robot, this);
     listWidgetItem->setSizeHint(theWidgetItem->sizeHint ());
     ui->listWidget->setItemWidget(listWidgetItem, theWidgetItem);
 
