@@ -52,3 +52,7 @@ compile_commands.json
 *creator.user*
 
 build
+
+#dir from backend
+AGV_Manage/backend/build
+AGV_Manager/backend/.vscode/
