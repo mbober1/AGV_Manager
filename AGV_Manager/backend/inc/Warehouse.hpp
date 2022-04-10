@@ -1,9 +1,11 @@
 #pragma once
+
+#include <fstream>
 #include <memory>
 #include "Dynamic2DMatrix.hpp"
 
-typedef Dynamic2DMatrix<int> IntMatrix;     // type defining a matrix of int values
-typedef std::unique_ptr<IntMatrix> pMatrix; // type defining a unique pointer to IntMatrix
+using IntMatrix = Dynamic2DMatrix<int> ;     // type defining a matrix of int values
+using pMatrix = std::unique_ptr<IntMatrix>; // type defining a unique pointer to IntMatrix
 
 
 /*
@@ -28,13 +30,6 @@ Warehouse()
  */
 Warehouse(const unsigned int x, const unsigned int y);
 
-/*
- * Parametric constructor creating an object with a pointer that contains instance IntMatrix with (x,y) size and particular data
- * @param[in] x - number of rows
- * @param[in] y - number of columns 
- * @param[in] input_data - vector storing data to write inside matrix
- */
-Warehouse(const unsigned int x, const unsigned int y, std::vector<int> input_data);
 
 /*
  * Basic method printing Matrix content 
@@ -42,9 +37,26 @@ Warehouse(const unsigned int x, const unsigned int y, std::vector<int> input_dat
 void print();
 
 /*
- * method reading data to matrix from file
+ * method adding sizes of matrix, only if the Matrix_layout_p ==  nullptr
+ * @param[in] x - number of rows 
+ * @param[in] y - number of columns 
  */
-bool read_from_file(const char * filename);
+bool add_sizes(const unsigned int x, const unsigned int y);
+
+/*
+ * method inserting data to matrix from vector<int>
+ * @param[in] x - number of rows 
+ * @param[in] y - number of columns 
+ */
+void insert_data_matrix(std::vector<int> input_data);
 
 };
 
+
+
+/*
+ * function reading data to a matrix from file
+ * @param[in] filename - name of a file
+ * @return - true if reading will be executed with success, false in another case
+ */
+Warehouse read_from_file(const char * filename);

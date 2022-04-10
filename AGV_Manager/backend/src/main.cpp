@@ -13,9 +13,9 @@ int main(){
         data_to_send.push_back(i);
     }
 
-    const int N = 10;
-    const int M = 10;
-    Warehouse Warehouse_object(N,M, data_to_send);
+    const char * file_name = "warehouse_layout.txt";
+
+    Warehouse Warehouse_object = read_from_file(file_name);
     Warehouse_object.print();
 
 

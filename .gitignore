@@ -56,3 +56,4 @@ build
 #dir from backend
 AGV_Manage/backend/build
 AGV_Manager/backend/.vscode/
+AGV_Manager/backend/files_to_read
