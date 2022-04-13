@@ -47,6 +47,9 @@ void print();
  */
 bool insert_data(std::vector<T> data);
 
+
+unsigned int rows_number() { return this->sizeX; }
+unsigned int columns_number() { return this->sizeY; }
 };
 
 #include "Dynamic2DMatrix.hpp"
