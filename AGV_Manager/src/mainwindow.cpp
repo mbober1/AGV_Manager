@@ -1,5 +1,5 @@
-#include "mainwindow.hpp"
-#include "ui_mainwindow.h"
+#include "inc/mainwindow.hpp"
+#include "build/ui_mainwindow.h"
 
 #include <QListWidget>
 #include <QPalette>
