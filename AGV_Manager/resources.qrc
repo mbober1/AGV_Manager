@@ -5,4 +5,7 @@
     <qresource prefix="/icon">
         <file>resources/icons/warehouse.png</file>
     </qresource>
+    <qresource prefix="/data">
+        <file>resources/data/warehouse.data</file>
+    </qresource>
 </RCC>

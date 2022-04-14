@@ -2,7 +2,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++14
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -13,6 +13,7 @@ SOURCES += \
     src/mainwindow.cpp \
     src/robot.cpp \
     src/scene.cpp \
+    src/warehouse.cpp \
     src/taskitem.cpp
 
 HEADERS += \
@@ -20,13 +21,16 @@ HEADERS += \
     inc/robot.hpp \
     inc/scene.hpp \
     inc/taskitem.hpp \
-    build/ui_listitem.h \
-    build/ui_mainwindow.h \
-    build/ui_taskitem.h
+    inc/warehouse.hpp \
+    inc/Dynamic2DMatrix.hpp
 
 FORMS += \
     ui/mainwindow.ui \
     ui/taskitem.ui
+
+
+RC_ICONS = resources/icons/warehouse.ico
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

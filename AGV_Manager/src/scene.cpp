@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QBrush>
+#include "inc/warehouse.hpp"
 
 #define ROBOT_RED_FIRST_COLOR       QColor(0xB7, 0x1C, 0x1C)
 #define ROBOT_RED_SECOND_COLOR      QColor(0xEF, 0x53, 0x50, 0xAA)
@@ -50,6 +51,11 @@ Scene::Scene(QWidget *parent)
     this->robots.append(Robot(ROBOT_BLUE_HOME, QPoint(0,0), ROBOT_BLUE_FIRST_COLOR, ROBOT_BLUE_SECOND_COLOR));
 
     this->warehouse_points = create_warehouse();
+    Warehouse warehouse_object = read_from_file("/home/mbober/Documents/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/warehouse.data");
+    // Warehouse warehouse_object = read_from_file(":/data/resources/data/warehouse.data");
+
+    // warehouse_object.print();
+
 
     this->robots[0].add_point(QPoint(940, 50));
     this->robots[0].add_point(QPoint(940, 270));
@@ -73,8 +79,7 @@ Scene::Scene(QWidget *parent)
     this->robots[2].add_point(QPoint(750, 630));
 
     connect(animation_timer, &QTimer::timeout, this, &Scene::animation_update);
-//    animation_timer->start(17); // about 60 FPS
-    animation_timer->start(7); // about 60 FPS
+    animation_timer->start(17); // about 60 FPS
 
 }
 
