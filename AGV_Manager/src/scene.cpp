@@ -1,4 +1,4 @@
-#include "scene.hpp"
+#include "inc/scene.hpp"
 #include <QPainter>
 #include <QPainterPath>
 #include <QBrush>
