@@ -67,16 +67,16 @@ void Warehouse::create_graph()
         if( i < columns_num )
         {  
             if( i != columns_num -1 )
-                if( (*pTemp)[i] == 1 && (*this->Matrix_layout_p.get())[i+1] == 1 )
+                if( (*pTemp)[i] == 1 && (*pTemp)[i+1] == 1 )
                 {
                         vector[i].push_back(neighbor(i+1));
                 }
-            if( (*this->Matrix_layout_p.get())[i] == 1 && (*this->Matrix_layout_p.get())[i+columns_num] == 1 )
+            if( (*pTemp)[i] == 1 && (*pTemp)[i+columns_num] == 1 )
             {
                 vector[i].push_back(neighbor(i+columns_num));
             }
             if(i != 0)
-                if( (*this->Matrix_layout_p.get())[i] == 1 && (*this->Matrix_layout_p.get())[i-1] == 1 )
+                if( (*pTemp)[i] == 1 && (*pTemp)[i-1] == 1 )
                 {
                     vector[i].push_back(neighbor(i-1));
                 }
@@ -85,16 +85,16 @@ void Warehouse::create_graph()
         else if(i > (row_num*columns_num - columns_num -1))
         {
             if( i != row_num*columns_num -1 )
-                if( (*pTemp)[i] == 1 && (*this->Matrix_layout_p.get())[i+1] == 1 )
+                if( (*pTemp)[i] == 1 && (*pTemp)[i+1] == 1 ) 
                 {
                         vector[i].push_back(neighbor(i+1));
                 }
-            if( (*this->Matrix_layout_p.get())[i] == 1 && (*this->Matrix_layout_p.get())[i-columns_num] == 1 )
+            if( (*pTemp)[i] == 1 && (*pTemp)[i-columns_num] == 1 )
             {
                 vector[i].push_back(neighbor(i-columns_num));
             }
             if(i != row_num*(columns_num-1))
-                if( (*this->Matrix_layout_p.get())[i] == 1 && (*this->Matrix_layout_p.get())[i-1] == 1 )
+                if( (*pTemp)[i] == 1 && (*pTemp)[i-1] == 1 ) 
                 {
                     vector[i].push_back(neighbor(i-1));
                 }
@@ -103,20 +103,20 @@ void Warehouse::create_graph()
         else
         {
             if( !(i % (columns_num-1) == 0) )
-                if( (*pTemp)[i] == 1 && (*this->Matrix_layout_p.get())[i+1] == 1 )
+                if( (*pTemp)[i] == 1 && (*pTemp)[i+1] == 1 )
                 {
                         vector[i].push_back(neighbor(i+1));
                 }
-            if( (*this->Matrix_layout_p.get())[i] == 1 && (*this->Matrix_layout_p.get())[i-columns_num] == 1 )
+            if( (*pTemp)[i] == 1 && (*pTemp)[i-columns_num] == 1 )
             {
                 vector[i].push_back(neighbor(i-columns_num));
             }
-            if( (*this->Matrix_layout_p.get())[i] == 1 && (*this->Matrix_layout_p.get())[i+columns_num] == 1 )
+            if( (*pTemp)[i] == 1 && (*pTemp)[i+columns_num] == 1 )
             {
                 vector[i].push_back(neighbor(i+columns_num));
             }
             if( !(i % columns_num == 0) )
-                if( (*this->Matrix_layout_p.get())[i] == 1 && (*this->Matrix_layout_p.get())[i-1] == 1 )
+                if( (*pTemp)[i] == 1 && (*pTemp)[i-1] == 1 )
                 {
                     vector[i].push_back(neighbor(i-1));
                 }
