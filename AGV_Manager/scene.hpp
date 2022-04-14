@@ -19,6 +19,8 @@ private:
     int line_size = 6;
 
     void animation_update();
+    QVector<QPoint> create_warehouse();
+    QVector<QPoint> warehouse_points;
 
 signals:
     void test(int progress);

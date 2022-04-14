@@ -15,6 +15,13 @@
 #define ROBOT_BLUE_SECOND_COLOR     QColor(0x29, 0xB6, 0xF6, 0xAA)
 #define ROBOT_BLUE_HOME             QPoint(50,270)
 
+#define WAREHOUSE_WIDTH             1000
+#define WAREHOUSE_HEIGTH            700
+#define WAREHOUSE_BLOCK             50
+#define get_block_center(block)     (block * WAREHOUSE_BLOCK + WAREHOUSE_BLOCK/ 2)
+#define WAREHOUSE_POINT_COLOR       QColor(0x00, 0x00, 0x00)
+
+
   
 /*!
  * \brief Constructor Scene Class
@@ -42,6 +49,7 @@ Scene::Scene(QWidget *parent)
     this->robots.append(Robot(ROBOT_GREEN_HOME, QPoint(0,0), ROBOT_GREEN_FIRST_COLOR, ROBOT_GREEN_SECOND_COLOR));
     this->robots.append(Robot(ROBOT_BLUE_HOME, QPoint(0,0), ROBOT_BLUE_FIRST_COLOR, ROBOT_BLUE_SECOND_COLOR));
 
+    this->warehouse_points = create_warehouse();
 
     this->robots[0].add_point(QPoint(940, 50));
     this->robots[0].add_point(QPoint(940, 270));
@@ -100,12 +108,17 @@ void Scene::paintEvent(QPaintEvent *event)
             painter.drawEllipse(agv.get_path().back() + agv.drawing_offset, this->point_size, this->point_size);
         }
 
-
         // drawing actuall position
         painter.setPen(QPen(agv.MainColor, this->line_size, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
         painter.setBrush(QBrush(agv.MainColor));
         painter.drawEllipse(agv.get_position() + agv.drawing_offset, this->point_size, this->point_size);
 
+        // debug
+        for (auto &point : warehouse_points)
+        {
+            painter.setBrush(QBrush(WAREHOUSE_POINT_COLOR));
+            painter.drawEllipse(point, 5, 5);
+        }
     }
 
 }
@@ -156,4 +169,23 @@ void Scene::animation_update()
 
     emit test(this->robots[0].get_progress()); // TO DO
 
+}
+
+QVector<QPoint> Scene::create_warehouse() 
+{
+    QVector<QPoint> results;
+
+    size_t width = WAREHOUSE_WIDTH / WAREHOUSE_BLOCK;
+    size_t height = WAREHOUSE_HEIGTH / WAREHOUSE_BLOCK;
+
+    for (size_t i = 0; i < height; i++)
+    {
+        for (size_t j = 0; j < width; j++)
+        {
+            results.push_back(QPoint(get_block_center(j), get_block_center(i)));
+        }
+        
+    }
+    
+    return results;
 }
