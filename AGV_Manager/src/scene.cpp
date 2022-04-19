@@ -23,7 +23,6 @@
 #define WAREHOUSE_POINT_COLOR       QColor(0x00, 0x00, 0x00)
 
 
-  
 /*!
  * \brief Constructor Scene Class
  */
@@ -32,7 +31,7 @@ Scene::Scene(QWidget *parent)
       animation_timer(new QTimer(this))
 {
 
-    this->setGeometry(0, 0 , 1000, 720);
+    this->setGeometry(0, 0 , WAREHOUSE_WIDTH, WAREHOUSE_HEIGTH);
     this->setAutoFillBackground(true);
 
     QPalette palette = this->palette();
@@ -45,41 +44,39 @@ Scene::Scene(QWidget *parent)
     this->show();
 
 
+    this->robots.append(Robot(ROBOT_RED_HOME, ROBOT_RED_FIRST_COLOR, ROBOT_RED_SECOND_COLOR));
+    this->robots.append(Robot(ROBOT_GREEN_HOME, ROBOT_GREEN_FIRST_COLOR, ROBOT_GREEN_SECOND_COLOR));
+    this->robots.append(Robot(ROBOT_BLUE_HOME, ROBOT_BLUE_FIRST_COLOR, ROBOT_BLUE_SECOND_COLOR));
 
-    this->robots.append(Robot(ROBOT_RED_HOME, QPoint(0,0), ROBOT_RED_FIRST_COLOR, ROBOT_RED_SECOND_COLOR));
-    this->robots.append(Robot(ROBOT_GREEN_HOME, QPoint(0,0), ROBOT_GREEN_FIRST_COLOR, ROBOT_GREEN_SECOND_COLOR));
-    this->robots.append(Robot(ROBOT_BLUE_HOME, QPoint(0,0), ROBOT_BLUE_FIRST_COLOR, ROBOT_BLUE_SECOND_COLOR));
-
-    this->warehouse_points = create_warehouse();
     Warehouse warehouse_object = read_from_file("/home/mbober/Documents/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/warehouse.data");
+    this->warehouse_points = create_warehouse(3, 6);
+
     // Warehouse warehouse_object = read_from_file(":/data/resources/data/warehouse.data");
 
-    // warehouse_object.print();
 
+    // this->robots[0].add_point(QPoint(940, 50));
+    // this->robots[0].add_point(QPoint(940, 270));
+    // this->robots[0].add_point(QPoint(250, 270));
+    // this->robots[0].add_point(QPoint(250, 600));
+    // this->robots[0].add_point(QPoint(750, 600));
+    // this->robots[0].add_point(QPoint(750, 630));
 
-    this->robots[0].add_point(QPoint(940, 50));
-    this->robots[0].add_point(QPoint(940, 270));
-    this->robots[0].add_point(QPoint(250, 270));
-    this->robots[0].add_point(QPoint(250, 600));
-    this->robots[0].add_point(QPoint(750, 600));
-    this->robots[0].add_point(QPoint(750, 630));
+    // this->robots[1].add_point(QPoint(590, 150));
+    // this->robots[1].add_point(QPoint(590, 270));
+    // this->robots[1].add_point(QPoint(940, 270));
+    // this->robots[1].add_point(QPoint(940, 600));
+    // this->robots[1].add_point(QPoint(750, 600));
+    // this->robots[1].add_point(QPoint(750, 630));
 
-    this->robots[1].add_point(QPoint(590, 150));
-    this->robots[1].add_point(QPoint(590, 270));
-    this->robots[1].add_point(QPoint(940, 270));
-    this->robots[1].add_point(QPoint(940, 600));
-    this->robots[1].add_point(QPoint(750, 600));
-    this->robots[1].add_point(QPoint(750, 630));
-
-    this->robots[2].add_point(QPoint(590, 270));
-    this->robots[2].add_point(QPoint(590, 380));
-    this->robots[2].add_point(QPoint(250, 380));
-    this->robots[2].add_point(QPoint(250, 600));
-    this->robots[2].add_point(QPoint(750, 600));
-    this->robots[2].add_point(QPoint(750, 630));
+    // this->robots[2].add_point(QPoint(590, 270));
+    // this->robots[2].add_point(QPoint(590, 380));
+    // this->robots[2].add_point(QPoint(250, 380));
+    // this->robots[2].add_point(QPoint(250, 600));
+    // this->robots[2].add_point(QPoint(750, 600));
+    // this->robots[2].add_point(QPoint(750, 630));
 
     connect(animation_timer, &QTimer::timeout, this, &Scene::animation_update);
-    animation_timer->start(17); // about 60 FPS
+    animation_timer->start(1000 / 60); // about 60 FPS
 
 }
 
@@ -176,12 +173,9 @@ void Scene::animation_update()
 
 }
 
-QVector<QPoint> Scene::create_warehouse() 
+QVector<QPoint> Scene::create_warehouse(size_t width, size_t height) 
 {
     QVector<QPoint> results;
-
-    size_t width = WAREHOUSE_WIDTH / WAREHOUSE_BLOCK;
-    size_t height = WAREHOUSE_HEIGTH / WAREHOUSE_BLOCK;
 
     for (size_t i = 0; i < height; i++)
     {
@@ -189,7 +183,6 @@ QVector<QPoint> Scene::create_warehouse()
         {
             results.push_back(QPoint(get_block_center(j), get_block_center(i)));
         }
-        
     }
     
     return results;

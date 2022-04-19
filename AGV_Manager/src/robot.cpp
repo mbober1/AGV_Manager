@@ -10,7 +10,7 @@ Robot::Robot()
 
 }
 
-Robot::Robot(const QPoint &home_position, const QPoint &drawing_offset, const QColor &MainColor, const QColor &SecondColor) :
+Robot::Robot(const QPoint &home_position, const QColor &MainColor, const QColor &SecondColor) :
     drawing_offset(drawing_offset),
     MainColor(MainColor),
     SecondColor(SecondColor),

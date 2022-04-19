@@ -19,7 +19,7 @@ private:
     int line_size = 6;
 
     void animation_update();
-    QVector<QPoint> create_warehouse();
+    QVector<QPoint> create_warehouse(size_t width, size_t height);
     QVector<QPoint> warehouse_points;
 
 signals:

@@ -9,7 +9,7 @@ class Robot
 {
 public:
     Robot();
-    Robot(const QPoint &home_position, const QPoint &drawing_offset, const QColor &MainColor, const QColor &SecondColor);
+    Robot(const QPoint &home_position, const QColor &MainColor, const QColor &SecondColor);
     const QVector<QPoint> &get_path();
     const QPoint &get_position();
     void add_point(const QPoint &point);
