@@ -1,10 +1,8 @@
 #include "Warehouse.hpp"
 
-using vertex_t = int;
-using weight_t = int;
 
 
-
+weight_t neighbor::weight=1;
 
 Warehouse::Warehouse(const unsigned int x, const unsigned int y): Matrix_layout_p{std::make_unique<IntMatrix>(x,y)}
 {
@@ -171,7 +169,6 @@ Warehouse read_from_file(const char * filename)
 std::list<int> Warehouse::compute_path_Dijkstra(const int start_vertex, const int final_vertex)
 {
 
-    std::cout<< Warehouse_graph.size() << std::endl;
     std::list<vertex_t> path;  // vector storing road 
 
     auto graph_size = this->Warehouse_graph.size(); 
@@ -192,24 +189,23 @@ std::list<int> Warehouse::compute_path_Dijkstra(const int start_vertex, const in
 
     while (!vertex_queue.empty()) 
     {
-        weight_t dist = vertex_queue.begin()->first;
-        vertex_t u = vertex_queue.begin()->second;
+        auto dist = vertex_queue.begin()->first;
+        auto u = vertex_queue.begin()->second;
         vertex_queue.erase(vertex_queue.begin());
  
-        // Visit each edge exiting u
-	    const std::vector<neighbor> &neighbors = this->Warehouse_graph[u];
+        
+	    const auto& neighbors = this->Warehouse_graph[u];
         for (std::vector<neighbor>::const_iterator neighbor_iter = neighbors.begin();
              neighbor_iter != neighbors.end();
              neighbor_iter++)
         {
-            vertex_t v = neighbor_iter->target;
-            weight_t weight = neighbor_iter->weight;
+            auto v = neighbor_iter->target;
+            auto weight = neighbor_iter->weight;
             
-            weight_t distance_through_u = dist + weight;
+            auto distance_through_u = dist + weight;
 	        if (distance_through_u < minimal_distance[v]) 
             {
                 vertex_queue.erase(std::make_pair(minimal_distance[v], v));
-                std::cout << v << " " << weight << std::endl;
                 minimal_distance[v] = distance_through_u;
                 previous[v] = u;
                 vertex_queue.insert(std::make_pair(minimal_distance[v], v));
@@ -217,12 +213,16 @@ std::list<int> Warehouse::compute_path_Dijkstra(const int start_vertex, const in
         }
     }
 
-    int final = final_vertex;
+    auto final = final_vertex;
 
     for ( ; final != -1; final = previous[final])
         path.push_front(final);
 
+    for(const auto & it: path)
+    {
+        std::cout << it << " " ;
+    }
 
-    std::copy(path.begin(), path.end(), std::ostream_iterator<vertex_t>(std::cout, " "));
+    
     return path;
 }
