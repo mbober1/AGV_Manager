@@ -9,6 +9,8 @@ int main(){
     Warehouse Warehouse_object = read_from_file(file_name);
     Warehouse_object.print();
 
+    Warehouse_object.compute_path_Dijkstra(0, 48);
+
 
     return 0;
 }

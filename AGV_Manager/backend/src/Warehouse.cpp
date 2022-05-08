@@ -1,7 +1,9 @@
 #include "Warehouse.hpp"
 
+using vertex_t = int;
+using weight_t = int;
 
-int neighbor::weight = 1; 
+
 
 
 Warehouse::Warehouse(const unsigned int x, const unsigned int y): Matrix_layout_p{std::make_unique<IntMatrix>(x,y)}
@@ -37,6 +39,7 @@ void Warehouse::insert_data_matrix( std::vector<int> input_data)
     
 }
 
+
 bool Warehouse::add_sizes(const unsigned int x, const unsigned int y)
 {
     if(this->Matrix_layout_p != nullptr)
@@ -45,7 +48,6 @@ bool Warehouse::add_sizes(const unsigned int x, const unsigned int y)
     this->Matrix_layout_p = std::make_unique<IntMatrix>(x,y);
     return true;
 }
-
 
 
 void Warehouse::create_graph()
@@ -132,8 +134,6 @@ void Warehouse::create_graph()
 }
 
 
-
-
 Warehouse read_from_file(const char * filename)
 {
     std::ifstream ReadFile(filename);
@@ -165,4 +165,64 @@ Warehouse read_from_file(const char * filename)
 
     WarehouseObj.insert_data_matrix(data_buff);
     return WarehouseObj;
+}
+
+
+std::list<int> Warehouse::compute_path_Dijkstra(const int start_vertex, const int final_vertex)
+{
+
+    std::cout<< Warehouse_graph.size() << std::endl;
+    std::list<vertex_t> path;  // vector storing road 
+
+    auto graph_size = this->Warehouse_graph.size(); 
+
+    std::vector<weight_t> minimal_distance;  
+    std::vector<vertex_t> previous;  
+
+    minimal_distance.clear();
+    minimal_distance.resize(graph_size, max_weight);
+    minimal_distance[start_vertex] = 0;
+
+    previous.clear();
+    previous.resize(graph_size, -1);
+
+    std::set<std::pair<weight_t, vertex_t> > vertex_queue;
+    vertex_queue.insert(std::make_pair(minimal_distance[start_vertex], start_vertex));
+
+
+    while (!vertex_queue.empty()) 
+    {
+        weight_t dist = vertex_queue.begin()->first;
+        vertex_t u = vertex_queue.begin()->second;
+        vertex_queue.erase(vertex_queue.begin());
+ 
+        // Visit each edge exiting u
+	    const std::vector<neighbor> &neighbors = this->Warehouse_graph[u];
+        for (std::vector<neighbor>::const_iterator neighbor_iter = neighbors.begin();
+             neighbor_iter != neighbors.end();
+             neighbor_iter++)
+        {
+            vertex_t v = neighbor_iter->target;
+            weight_t weight = neighbor_iter->weight;
+            
+            weight_t distance_through_u = dist + weight;
+	        if (distance_through_u < minimal_distance[v]) 
+            {
+                vertex_queue.erase(std::make_pair(minimal_distance[v], v));
+                std::cout << v << " " << weight << std::endl;
+                minimal_distance[v] = distance_through_u;
+                previous[v] = u;
+                vertex_queue.insert(std::make_pair(minimal_distance[v], v));
+	        }
+        }
+    }
+
+    int final = final_vertex;
+
+    for ( ; final != -1; final = previous[final])
+        path.push_front(final);
+
+
+    std::copy(path.begin(), path.end(), std::ostream_iterator<vertex_t>(std::cout, " "));
+    return path;
 }

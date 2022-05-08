@@ -3,17 +3,27 @@
 #include <fstream>
 #include <memory>
 #include "Dynamic2DMatrix.hpp"
+#include <limits>
+#include <set>
+#include <list>
+#include <utility> // for pair
+#include <iterator>
+#include <algorithm>
+
+
 
 using IntMatrix = Dynamic2DMatrix<int> ;     // type defining a matrix of int values
 using pMatrix = std::unique_ptr<IntMatrix>; // type defining a unique pointer to IntMatrix
 
 
+const int max_weight = std::numeric_limits<int>::max();
+
 /*
  * the structure representing an adjacent vertex
  */
 struct neighbor{
-    int target;
-    static int weight;
+    int target=1;
+    int weight=1;
     neighbor(int target_arg): target(target_arg) {}
 };
 /*
@@ -64,6 +74,15 @@ bool add_sizes(const unsigned int x, const unsigned int y);
  * @param[in] y - number of columns 
  */
 void insert_data_matrix(std::vector<int> input_data);
+
+
+/*
+ * method finding the shortest path from the start vertex to the final vertex
+ * @param[in] start_vertex -  start vertex 
+ * @param[in] final_vertex - final vertex 
+ * @return - vector storing sequence of vertices ( required road to achieve final pos.)
+ */
+std::list<int> compute_path_Dijkstra(const int start_vertex, int final_vertex);
 
 };
 
