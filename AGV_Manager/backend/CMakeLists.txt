@@ -17,6 +17,8 @@ add_compile_options(-c
 set(SRC
     src/main.cpp
     src/Warehouse.cpp
+    src/Stage.cpp
+    src/AGV.cpp
 )
 
 

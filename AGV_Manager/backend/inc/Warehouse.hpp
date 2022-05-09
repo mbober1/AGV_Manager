@@ -28,14 +28,13 @@ struct neighbor{
     static weight_t  weight;
     neighbor(int target_arg): target(target_arg) {}
 };
+
+using adjacency_list_t = std::vector<std::vector<neighbor>>;
+
 /*
  * Definition of Warehouse class that represents warehouse for AGVs. 
  * It's used to map warehouse layout by creating matrix and graph 
  */
-
-using adjacency_list_t = std::vector<std::vector<neighbor>>;
-
-
 class Warehouse{
 
 pMatrix Matrix_layout_p;  // Unique  pointer to IntMatrix

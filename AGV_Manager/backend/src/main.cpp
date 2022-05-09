@@ -1,15 +1,13 @@
 #include <iostream>
 #include <memory>
-#include "Warehouse.hpp"
-
+#include "Stage.hpp"
 int main(){
 
     const char * file_name = "warehouse_1.txt";
 
-    Warehouse Warehouse_object = read_from_file(file_name);
-    Warehouse_object.print();
-
-    Warehouse_object.compute_path_Dijkstra(0, 48);
+    Stage stage(file_name);
+    stage.print_info();
+    
 
 
     return 0;
