@@ -2,7 +2,6 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QBrush>
-#include "inc/warehouse.hpp"
 
 #define ROBOT_RED_FIRST_COLOR       QColor(0xB7, 0x1C, 0x1C)
 #define ROBOT_RED_SECOND_COLOR      QColor(0xEF, 0x53, 0x50, 0xAA)
@@ -28,6 +27,7 @@
  */
 Scene::Scene(QWidget *parent)
     : QWidget{parent},
+      backend(new Stage("/home/mbober/Documents/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/warehouse.data")),
       animation_timer(new QTimer(this))
 {
 
@@ -48,11 +48,7 @@ Scene::Scene(QWidget *parent)
     this->robots.append(Robot(ROBOT_GREEN_HOME, ROBOT_GREEN_FIRST_COLOR, ROBOT_GREEN_SECOND_COLOR));
     this->robots.append(Robot(ROBOT_BLUE_HOME, ROBOT_BLUE_FIRST_COLOR, ROBOT_BLUE_SECOND_COLOR));
 
-    Warehouse warehouse_object = read_from_file("/home/mbober/Documents/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/warehouse.data");
-    this->warehouse_points = create_warehouse(3, 6);
-
-    // Warehouse warehouse_object = read_from_file(":/data/resources/data/warehouse.data");
-
+    this->warehouse_points = create_grid(backend->Warehouse_object.columns_num(), backend->Warehouse_object.rows_num());
 
     // this->robots[0].add_point(QPoint(940, 50));
     // this->robots[0].add_point(QPoint(940, 270));
@@ -98,7 +94,7 @@ void Scene::paintEvent(QPaintEvent *event)
 
             for (auto &point : agv.get_path())
             {
-                path.lineTo(point + agv.drawing_offset);
+                path.lineTo(point);
             }
 
             painter.setPen(QPen(agv.SecondColor, this->line_size, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
@@ -107,13 +103,13 @@ void Scene::paintEvent(QPaintEvent *event)
 
             // drawing last point
             painter.setBrush(QBrush(agv.SecondColor));
-            painter.drawEllipse(agv.get_path().back() + agv.drawing_offset, this->point_size, this->point_size);
+            painter.drawEllipse(agv.get_path().back(), this->point_size, this->point_size);
         }
 
         // drawing actuall position
         painter.setPen(QPen(agv.MainColor, this->line_size, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
         painter.setBrush(QBrush(agv.MainColor));
-        painter.drawEllipse(agv.get_position() + agv.drawing_offset, this->point_size, this->point_size);
+        painter.drawEllipse(agv.get_position(), this->point_size, this->point_size);
 
         // debug
         for (auto &point : warehouse_points)
@@ -173,7 +169,7 @@ void Scene::animation_update()
 
 }
 
-QVector<QPoint> Scene::create_warehouse(size_t width, size_t height) 
+QVector<QPoint> Scene::create_grid(size_t width, size_t height) 
 {
     QVector<QPoint> results;
 

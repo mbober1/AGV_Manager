@@ -19,7 +19,6 @@ public:
     int get_path_len();
     int get_progress();
 
-    QPoint drawing_offset;
     QColor MainColor;
     QColor SecondColor;
 

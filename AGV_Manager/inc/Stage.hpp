@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Warehouse.hpp"
+#include "inc/warehouse.hpp"
 #include "AGV.hpp"
 
 struct Task{
@@ -15,11 +15,11 @@ using Tasks = std::list<Task>;
  */
 class Stage{
 
+public:
 Warehouse Warehouse_object;
 AGVs AGV_vehicles;
 Tasks task_to_do;
 
-public:
 
 Stage() = delete;
 Stage(const char * filename);

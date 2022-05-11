@@ -1,4 +1,4 @@
-#include "Stage.hpp"
+#include "inc/Stage.hpp"
 
 Stage::Stage(const char * filename)
 {

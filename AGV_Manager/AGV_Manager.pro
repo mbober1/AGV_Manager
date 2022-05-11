@@ -14,6 +14,7 @@ SOURCES += \
     src/robot.cpp \
     src/scene.cpp \
     src/warehouse.cpp \
+    src/Stage.cpp \
     src/taskitem.cpp
 
 HEADERS += \
@@ -22,6 +23,7 @@ HEADERS += \
     inc/scene.hpp \
     inc/taskitem.hpp \
     inc/warehouse.hpp \
+    inc/Stage.hpp \
     inc/Dynamic2DMatrix.hpp
 
 FORMS += \

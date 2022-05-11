@@ -3,7 +3,8 @@
 
 #include <QWidget>
 #include <QTimer>
-#include "robot.hpp"
+#include "inc/robot.hpp"
+#include "inc/Stage.hpp"
 
 class Scene : public QWidget
 {
@@ -14,12 +15,13 @@ public:
 
 private:
     QVector<Robot> robots;
+    Stage* backend;
     QTimer* animation_timer;
     int point_size = 8;
     int line_size = 6;
 
     void animation_update();
-    QVector<QPoint> create_warehouse(size_t width, size_t height);
+    QVector<QPoint> create_grid(size_t width, size_t height);
     QVector<QPoint> warehouse_points;
 
 signals:
