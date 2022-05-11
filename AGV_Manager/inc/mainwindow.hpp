@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "taskitem.hpp"
-#include "scene.hpp"
+#include "inc/scene.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

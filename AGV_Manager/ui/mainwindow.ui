@@ -85,7 +85,7 @@
   <customwidget>
    <class>Scene</class>
    <extends>QWidget</extends>
-   <header>scene.hpp</header>
+   <header>inc/scene.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
