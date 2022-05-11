@@ -2,9 +2,6 @@
 
 #include <fstream>
 #include <memory>
-<<<<<<< HEAD:AGV_Manager/inc/warehouse.hpp
-#include "inc/Dynamic2DMatrix.hpp"
-=======
 #include "Dynamic2DMatrix.hpp"
 #include <limits>
 #include <set>
@@ -14,7 +11,6 @@
 #include <algorithm>
 
 
->>>>>>> master:AGV_Manager/backend/inc/Warehouse.hpp
 
 using IntMatrix = Dynamic2DMatrix<int> ;     // type defining a matrix of int values
 using pMatrix = std::unique_ptr<IntMatrix>; // type defining a unique pointer to IntMatrix

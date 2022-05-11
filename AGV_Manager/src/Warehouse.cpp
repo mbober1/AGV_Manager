@@ -1,4 +1,4 @@
-#include "inc/warehouse.hpp"
+#include "Warehouse.hpp"
 
 
 
@@ -124,7 +124,10 @@ void Warehouse::create_graph()
         
     }
 
+    std::cout << " size " << vector.size() << std::endl;
+
     this->Warehouse_graph = vector;
+
 
 }
 
