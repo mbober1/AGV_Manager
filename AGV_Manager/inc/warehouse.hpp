@@ -2,28 +2,43 @@
 
 #include <fstream>
 #include <memory>
+<<<<<<< HEAD:AGV_Manager/inc/warehouse.hpp
 #include "inc/Dynamic2DMatrix.hpp"
+=======
+#include "Dynamic2DMatrix.hpp"
+#include <limits>
+#include <set>
+#include <list>
+#include <utility> // for pair
+#include <iterator>
+#include <algorithm>
+
+
+>>>>>>> master:AGV_Manager/backend/inc/Warehouse.hpp
 
 using IntMatrix = Dynamic2DMatrix<int> ;     // type defining a matrix of int values
 using pMatrix = std::unique_ptr<IntMatrix>; // type defining a unique pointer to IntMatrix
+using vertex_t = int;
+using weight_t = int;
 
+
+const int max_weight = std::numeric_limits<int>::max();
 
 /*
  * the structure representing an adjacent vertex
  */
 struct neighbor{
-    int target;
-    static int weight;
+    vertex_t target;
+    static weight_t  weight;
     neighbor(int target_arg): target(target_arg) {}
 };
+
+using adjacency_list_t = std::vector<std::vector<neighbor>>;
+
 /*
  * Definition of Warehouse class that represents warehouse for AGVs. 
  * It's used to map warehouse layout by creating matrix and graph 
  */
-
-using adjacency_list_t = std::vector<std::vector<neighbor>>;
-
-
 class Warehouse{
 
 pMatrix Matrix_layout_p;  // Unique  pointer to IntMatrix
@@ -65,6 +80,26 @@ bool add_sizes(const unsigned int x, const unsigned int y);
  */
 void insert_data_matrix(std::vector<int> input_data);
 
+
+/*
+ * method finding the shortest path from the start vertex to the final vertex
+ * @param[in] start_vertex -  start vertex 
+ * @param[in] final_vertex - final vertex 
+ * @return - list storing sequence of vertices ( required road to achieve final pos.)
+ */
+std::list<int> compute_path_Dijkstra(const int start_vertex, int final_vertex);
+
+/*
+ * method returning the number of rows of the matrix symbolizing a the warehouse
+ * @return - The number of matrix rows
+ */
+int rows_num() {return Matrix_layout_p.get()->rows_number();}
+
+/*
+ * method returning the number of columns of the matrix symbolizing a the warehouse
+ * @return - The number of matrix columns
+ */
+int columns_num(){return Matrix_layout_p.get()->columns_number();}
 };
 
 
