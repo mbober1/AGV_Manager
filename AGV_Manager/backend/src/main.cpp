@@ -4,10 +4,11 @@
 int main(){
 
     const char * file_name = "warehouse_1.txt";
-
-    Stage stage(file_name);
-    stage.print_info();
+    const char * file_name_2 = "tasks_1.txt";
+    Stage stage(file_name, file_name_2,  option_3);
+   
     
+    stage.print_info();
 
 
     return 0;

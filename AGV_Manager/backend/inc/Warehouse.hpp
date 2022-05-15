@@ -9,7 +9,7 @@
 #include <utility> // for pair
 #include <iterator>
 #include <algorithm>
-
+#define IT_IS_PATH 1
 
 
 using IntMatrix = Dynamic2DMatrix<int> ;     // type defining a matrix of int values
