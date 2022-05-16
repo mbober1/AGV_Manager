@@ -65,8 +65,10 @@ void Stage::add_task_to_vehicle(int AGV_id)
     else
     {
         Task temp_task = tasks_to_do.front();
+        std::list<int> temp_path=std::move(Warehouse_object.compute_path_Dijkstra(AGV_vehicles[AGV_id-1].return_current_pos(),temp_task.target));
         tasks_to_do.pop_front();
-        AGV_vehicles[AGV_id-1].add_task(temp_task, Warehouse_object.compute_path_Dijkstra(AGV_vehicles[AGV_id-1].return_current_pos(),temp_task.target));
+        if(!temp_path.empty())
+            AGV_vehicles[AGV_id-1].add_task(temp_task,temp_path);
     }
 }
 

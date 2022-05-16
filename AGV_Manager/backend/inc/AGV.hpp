@@ -35,7 +35,7 @@ void print_info(); // using to print info about AGV object
  * @param [in] task_to_assign - task to do 
  * @return true if finished with success (not in use), else false
  */
-bool add_task(const Task task_to_assign, const std::list<int> path_to_target);
+void add_task(const Task task_to_assign, const std::list<int> path_to_target);
 
 
 /*

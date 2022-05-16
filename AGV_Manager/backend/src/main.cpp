@@ -9,11 +9,11 @@ int main(){
    
     
     stage.print_info();
-    stage.make_moves();
-    stage.make_moves();
-
-    stage.make_moves();
-
+    
+    for(auto i = 0; i < 10; i++)
+    {
+        stage.make_moves();
+    }
     stage.print_info();
 
 
