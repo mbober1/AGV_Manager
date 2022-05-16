@@ -9,12 +9,37 @@ void AGV::print_info()
 {
     std::cout << "Current pos: " << this->current_pos << std::endl;
     std::cout << "AGVs ID: " << this->id << std::endl;
+    
+    for(const auto & it: this->path_to_target)
+    {
+        std::cout << it << " "; 
+    }
 
 }
 
-bool AGV::add_target(const unsigned int target)
+bool AGV::add_task(const Task task_to_assign , const std::list<int> path_to_target)
 {
+    if(this->in_use == false)
+    {
+        this->target=task_to_assign.target;
+        this->in_use = true;
+        this->path_to_target = std::move(path_to_target);
+        return true;
+    }
+    else    return false;
+}
 
+void AGV::make_move()
+{
+    if(this->in_use == true)
+    {
+        current_pos = path_to_target.front();
+        path_to_target.pop_front();
+        if(current_pos == target)
+        {
+            in_use = false;
+        }
+    }
 }
 
 

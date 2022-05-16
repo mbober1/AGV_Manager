@@ -9,6 +9,12 @@ int main(){
    
     
     stage.print_info();
+    stage.make_moves();
+    stage.make_moves();
+
+    stage.make_moves();
+
+    stage.print_info();
 
 
     return 0;

@@ -48,10 +48,43 @@ bool Stage::read_tasks_from_file(const char * filename)
 
 void Stage::add_vehicles(vehicle_num option)
 {
-    
-    for(auto i = 0; i < option; i++)
+    for(auto i = 1; i < option + 1; i++)
     {
         AGV temp_object(i, STAR_POSITION);
         AGV_vehicles.push_back(std::move(temp_object));
+    }
+}
+
+void Stage::add_task_to_vehicle(int AGV_id)
+{
+    if(tasks_to_do.empty())
+    {
+        std::cerr << "Stage::add_task_to_vehicle: Lack of tasks to assign" << std::endl;
+        
+    }
+    else
+    {
+        Task temp_task = tasks_to_do.front();
+        tasks_to_do.pop_front();
+        AGV_vehicles[AGV_id-1].add_task(temp_task, Warehouse_object.compute_path_Dijkstra(AGV_vehicles[AGV_id-1].return_current_pos(),temp_task.target));
+    }
+}
+
+void Stage::make_moves()
+{
+    for(auto& it: this->AGV_vehicles)
+    {
+        if(it.return_status())
+        {
+            it.make_move();
+        }
+        else
+        {
+            if(!this->tasks_to_do.empty())
+            {
+                add_task_to_vehicle(it.return_id());
+                it.make_move();
+            }
+        }
     }
 }

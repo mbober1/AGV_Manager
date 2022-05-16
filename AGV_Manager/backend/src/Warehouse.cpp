@@ -218,6 +218,7 @@ std::list<int> Warehouse::compute_path_Dijkstra(const int start_vertex, const in
     for ( ; final != -1; final = previous[final])
         path.push_front(final);
 
+    path.erase(path.begin()); // delete first point.
     for(const auto& it: path)
     {
         std::cout << it << " " ;

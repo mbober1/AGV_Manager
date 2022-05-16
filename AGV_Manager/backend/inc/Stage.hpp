@@ -2,16 +2,15 @@
 
 #include "Warehouse.hpp"
 #include "AGV.hpp"
+#include "Task.hpp"
 #define STAR_POSITION 3
+
+
 enum vehicle_num    
 {
     option_1 = 1, option_2, option_3, option_4
 };
 
-struct Task{
-    int target;
-    int task_id;
-};
 
 using AGVs = std::vector<AGV>;
 using Tasks = std::list<Task>;
@@ -39,9 +38,13 @@ bool read_tasks_from_file(const char * filename);
  */
 void add_vehicles(vehicle_num option);
 
+/*
+ * Method to add a task to AGV vehicle
+ * @param[in] AGV_id - ID of an AGV vehicle which will have new task
+ */
+void add_task_to_vehicle(int AGV_id);
 
 public:
-
 
 Stage() = delete; // to prevent using a default constructor
 /*
@@ -57,6 +60,6 @@ void print_info();  // to print info about Stage's components
 int rows_num() {return this->Warehouse_object.rows_num();}   // returns a rows number
 int columns_num() {return this->Warehouse_object.columns_num();}    // returns a columns number
 
-void make_move();
+void make_moves();
 
 };
