@@ -124,8 +124,7 @@ void Warehouse::create_graph()
         
     }
 
-    std::cout << " size " << vector.size() << std::endl;
-
+    /* std::cout << " size " << vector.size() << std::endl; */
     this->Warehouse_graph = vector;
 
 
@@ -219,10 +218,10 @@ std::list<int> Warehouse::compute_path_Dijkstra(const int start_vertex, const in
         path.push_front(final);
 
     path.erase(path.begin()); // delete first point.
-    for(const auto& it: path)
+/*     for(const auto& it: path)
     {
         std::cout << it << " " ;
-    }
+    } */
 
     
     return path;

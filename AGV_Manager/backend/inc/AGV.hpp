@@ -44,4 +44,7 @@ void add_task(const Task task_to_assign, const std::list<int> path_to_target);
 void make_move();
 
 
+std::list<int> return_path() {return this->path_to_target;}
+
+
 };

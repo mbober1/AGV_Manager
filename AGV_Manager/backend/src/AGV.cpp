@@ -14,6 +14,7 @@ void AGV::print_info()
     {
         std::cout << it << " "; 
     }
+    std::cout << std::endl;
 
 }
 
@@ -35,8 +36,6 @@ void AGV::make_move()
     {
         current_pos = path_to_target.front();
         path_to_target.pop_front();
-                        std::cout << "tu" << std::endl;
-
         if(current_pos == target)
         {
             in_use = false;

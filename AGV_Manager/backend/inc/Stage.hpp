@@ -60,6 +60,22 @@ void print_info();  // to print info about Stage's components
 int rows_num() {return this->Warehouse_object.rows_num();}   // returns a rows number
 int columns_num() {return this->Warehouse_object.columns_num();}    // returns a columns number
 
+/*
+ * make_moves - performs moves by every vehicle along AGVs paths. If It does not have a path, make_moves does nothing
+ */
 void make_moves();
+
+/*
+ * returns a vector of current positions of each vehicle
+ * @return vector of intiger variabels which mean current pos, vector[0] = current pos AGV (ID=1)
+ */
+std::vector<int> return_current_positions();
+
+
+/*
+ * returns a vector of remaining points of paths  
+ * @return vector of paths 
+ */
+std::vector<std::list<int>> return_paths();
 
 };

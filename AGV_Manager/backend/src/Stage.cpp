@@ -4,17 +4,16 @@ Stage::Stage(const char * filename_warehouse, const char* filename_tasks, vehicl
 {
     this->Warehouse_object= read_from_file(filename_warehouse);
     this->read_tasks_from_file(filename_tasks);
-    std::cout << "opcja: " <<  option << std::endl;
     this->add_vehicles(option);
 }
 
 void Stage::print_info()
 {
-    this->Warehouse_object.print();
+/*     this->Warehouse_object.print();
     for(const auto& it: this->tasks_to_do)
     {
         std::cout << "task id: " << it.task_id << " target: " << it.target << std::endl;
-    }
+    } */
 
     for(auto& it: this->AGV_vehicles)
     {
@@ -89,4 +88,32 @@ void Stage::make_moves()
             }
         }
     }
+}
+
+
+
+std::vector<int> Stage::return_current_positions()
+{
+    std::vector<int> current_pos;
+
+    for(auto& it: this->AGV_vehicles)
+    {
+        current_pos.push_back(it.return_current_pos());
+    }
+
+    return current_pos;
+}
+
+
+std::vector<std::list<int>> Stage::return_paths()
+{
+    std::vector<std::list<int>> paths;
+
+        for(auto& it: this->AGV_vehicles)
+    {
+        paths.push_back(it.return_path());
+    }
+
+    return paths;
+
 }

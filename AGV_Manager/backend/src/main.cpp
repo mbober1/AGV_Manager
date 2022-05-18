@@ -13,8 +13,9 @@ int main(){
     for(auto i = 0; i < 10; i++)
     {
         stage.make_moves();
+        stage.print_info();
     }
-    stage.print_info();
+    
 
 
     return 0;
