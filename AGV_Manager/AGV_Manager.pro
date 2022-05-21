@@ -11,18 +11,21 @@ CONFIG += c++14
 SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
+    src/AGV.cpp \
     src/robot.cpp \
     src/scene.cpp \
-    src/warehouse.cpp \
+    src/Warehouse.cpp \
     src/Stage.cpp \
     src/taskitem.cpp
 
 HEADERS += \
     inc/mainwindow.hpp \
+    inc/AGV.hpp \
+    inc/Task.hpp \
     inc/robot.hpp \
     inc/scene.hpp \
     inc/taskitem.hpp \
-    inc/warehouse.hpp \
+    inc/Warehouse.hpp \
     inc/Stage.hpp \
     inc/Dynamic2DMatrix.hpp
 

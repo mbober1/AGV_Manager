@@ -1,4 +1,4 @@
-#include "inc/warehouse.hpp"
+#include "inc/Warehouse.hpp"
 
 
 
@@ -67,16 +67,16 @@ void Warehouse::create_graph()
         if( i < columns_num )
         {  
             if( i != columns_num -1 )
-                if( (*pTemp)[i] == 1 && (*pTemp)[i+1] == 1 )
+                if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i+1] == IT_IS_PATH )
                 {
                         vector[i].push_back(neighbor(i+1));
                 }
-            if( (*pTemp)[i] == 1 && (*pTemp)[i+columns_num] == 1 )
+            if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i+columns_num] == IT_IS_PATH )
             {
                 vector[i].push_back(neighbor(i+columns_num));
             }
             if(i != 0)
-                if( (*pTemp)[i] == 1 && (*pTemp)[i-1] == 1 )
+                if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i-1] == IT_IS_PATH )
                 {
                     vector[i].push_back(neighbor(i-1));
                 }
@@ -85,16 +85,16 @@ void Warehouse::create_graph()
         else if(i > (row_num*columns_num - columns_num -1))
         {
             if( i != row_num*columns_num -1 )
-                if( (*pTemp)[i] == 1 && (*pTemp)[i+1] == 1 ) 
+                if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i+1] == IT_IS_PATH ) 
                 {
                         vector[i].push_back(neighbor(i+1));
                 }
-            if( (*pTemp)[i] == 1 && (*pTemp)[i-columns_num] == 1 )
+            if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i-columns_num] == IT_IS_PATH )
             {
                 vector[i].push_back(neighbor(i-columns_num));
             }
             if(i != row_num*(columns_num-1))
-                if( (*pTemp)[i] == 1 && (*pTemp)[i-1] == 1 ) 
+                if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i-1] == IT_IS_PATH ) 
                 {
                     vector[i].push_back(neighbor(i-1));
                 }
@@ -103,20 +103,20 @@ void Warehouse::create_graph()
         else
         {
             if( !(i % (columns_num-1) == 0) )
-                if( (*pTemp)[i] == 1 && (*pTemp)[i+1] == 1 )
+                if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i+1] == IT_IS_PATH )
                 {
                         vector[i].push_back(neighbor(i+1));
                 }
-            if( (*pTemp)[i] == 1 && (*pTemp)[i-columns_num] == 1 )
+            if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i-columns_num] == IT_IS_PATH )
             {
                 vector[i].push_back(neighbor(i-columns_num));
             }
-            if( (*pTemp)[i] == 1 && (*pTemp)[i+columns_num] == 1 )
+            if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i+columns_num] == IT_IS_PATH )
             {
                 vector[i].push_back(neighbor(i+columns_num));
             }
             if( !(i % columns_num == 0) )
-                if( (*pTemp)[i] == 1 && (*pTemp)[i-1] == 1 )
+                if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i-1] == IT_IS_PATH )
                 {
                     vector[i].push_back(neighbor(i-1));
                 }
@@ -124,8 +124,7 @@ void Warehouse::create_graph()
         
     }
 
-    std::cout << " size " << vector.size() << std::endl;
-
+    /* std::cout << " size " << vector.size() << std::endl; */
     this->Warehouse_graph = vector;
 
 
@@ -218,10 +217,11 @@ std::list<int> Warehouse::compute_path_Dijkstra(const int start_vertex, const in
     for ( ; final != -1; final = previous[final])
         path.push_front(final);
 
-    for(const auto & it: path)
+    path.erase(path.begin()); // delete first point.
+/*     for(const auto& it: path)
     {
         std::cout << it << " " ;
-    }
+    } */
 
     
     return path;
