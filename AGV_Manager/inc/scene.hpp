@@ -12,6 +12,7 @@ class Scene : public QWidget
 public:
     explicit Scene(QWidget *parent = nullptr);
     virtual void paintEvent(QPaintEvent *event);
+    void set_new_positions(const std::vector<int> &position_list);
 
 private:
     QVector<Robot> robots;
@@ -23,6 +24,7 @@ private:
     void animation_update();
     QVector<QPoint> create_grid(size_t width, size_t height);
     QVector<QPoint> warehouse_points;
+    void animate(Robot &agv);
 
 signals:
     void test(int progress);

@@ -117,3 +117,8 @@ std::vector<std::list<int>> Stage::return_paths()
     return paths;
 
 }
+
+std::list<int> Stage::return_path(int AGV_id) 
+{
+    return AGV_vehicles.at(AGV_id).return_path();
+}

@@ -5,18 +5,19 @@
 /*!
  * \brief Constructor Robot Class
  */
-Robot::Robot()
-{
+Robot::Robot() {}
 
-}
-
-Robot::Robot(const QPoint &home_position, const QColor &MainColor, const QColor &SecondColor) :
+  
+/*!
+ * \brief Constructor Robot Class
+ */
+Robot::Robot(const QPoint &home_position, const QColor &MainColor, const QColor &SecondColor, int id) :
     MainColor(MainColor),
     SecondColor(SecondColor),
-    position(home_position)
-{
-
-}
+    position(home_position),
+    ready(true),
+    id(id)
+{}
 
 
 /*!
@@ -35,6 +36,20 @@ const QVector<QPoint> &Robot::get_path()
 void Robot::clear_path()
 {
    this->path_points.clear();
+}
+
+
+void Robot::set_path(std::list<int> &path, const QVector<QPoint> &warehouse_points) 
+{
+    for (size_t i = 0; i < path.size(); i++)
+    {
+        int point_idx = path.front();
+        path.pop_front();
+
+        this->add_point(warehouse_points[point_idx]);
+    }
+
+    ready = false;
 }
 
 
@@ -94,6 +109,13 @@ int Robot::get_progress()
 }
 
 
+void Robot::set_position(const QPoint &new_position) 
+{
+    this->position = new_position;
+}
+
+
+
 /*!
  * \brief Add point to path
  * \param[in] point - Point to be added
@@ -102,7 +124,6 @@ void Robot::add_point(const QPoint &point)
 {
     this->path_points.append(point);
 }
-
 
 /*!
  * \brief Get actual position of robot
@@ -113,6 +134,15 @@ const QPoint &Robot::get_position()
     return this->position;
 }
 
+int Robot::get_id() 
+{
+    return id;
+}
+
+const QPoint &Robot::get_next_point() 
+{
+    return path_points.first();
+}
 
 /*!
  * \brief Move robot by vector
@@ -125,9 +155,32 @@ void Robot::move(const QPoint &vector)
 
 
 /*!
- * \brief Remove first point od path
+ * \brief 
  */
-void Robot::checkpoint()
+void Robot::set_ready()
 {
-    this->path_points.pop_front();
+    this->ready = true;
+}
+
+void Robot::set_not_ready()
+{
+    this->ready = false;   
+}
+
+bool Robot::is_ready() 
+{
+    return ready;
+}
+
+bool Robot::is_arrived() 
+{
+    if (position == path_points.first())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+    
 }
