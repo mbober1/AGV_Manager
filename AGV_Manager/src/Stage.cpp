@@ -64,10 +64,10 @@ void Stage::add_task_to_vehicle(int AGV_id)
     else
     {
         Task temp_task = tasks_to_do.front();
-        std::list<int> temp_path=std::move(Warehouse_object.compute_path_Dijkstra(AGV_vehicles[AGV_id-1].return_current_pos(),temp_task.target));
+        std::list<int> temp_path=std::move(Warehouse_object.compute_path_Dijkstra(AGV_vehicles[AGV_id].return_current_pos(),temp_task.target));
         tasks_to_do.pop_front();
         if(!temp_path.empty())
-            AGV_vehicles[AGV_id-1].add_task(temp_task,temp_path);
+            AGV_vehicles[AGV_id].add_task(temp_task,temp_path);
     }
 }
 
@@ -78,14 +78,6 @@ void Stage::make_moves()
         if(it.return_status())
         {
             it.make_move();
-        }
-        else
-        {
-            if(!this->tasks_to_do.empty())
-            {
-                add_task_to_vehicle(it.return_id());
-                it.make_move();
-            }
         }
     }
 }
@@ -116,6 +108,11 @@ std::vector<std::list<int>> Stage::return_paths()
 
     return paths;
 
+}
+
+int Stage::return_current_positions(int AGV_id) 
+{
+    return this->AGV_vehicles[AGV_id].return_current_pos();
 }
 
 std::list<int> Stage::return_path(int AGV_id) 

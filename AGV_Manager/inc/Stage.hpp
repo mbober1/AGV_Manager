@@ -38,13 +38,14 @@ bool read_tasks_from_file(const char * filename);
  */
 void add_vehicles(vehicle_num option);
 
+public:
+
 /*
  * Method to add a task to AGV vehicle
  * @param[in] AGV_id - ID of an AGV vehicle which will have new task
  */
 void add_task_to_vehicle(int AGV_id);
 
-public:
 
 Stage() = delete; // to prevent using a default constructor
 /*
@@ -70,6 +71,9 @@ void make_moves();
  * @return vector of intiger variabels which mean current pos, vector[0] = current pos AGV (ID=1)
  */
 std::vector<int> return_current_positions();
+
+int return_current_positions(int AGV_id);
+
 
 
 /*

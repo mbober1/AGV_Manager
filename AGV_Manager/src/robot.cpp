@@ -14,8 +14,8 @@ Robot::Robot() {}
 Robot::Robot(const QPoint &home_position, const QColor &MainColor, const QColor &SecondColor, int id) :
     MainColor(MainColor),
     SecondColor(SecondColor),
+    state(Robot_State::READY),
     position(home_position),
-    ready(true),
     id(id)
 {}
 
@@ -41,15 +41,13 @@ void Robot::clear_path()
 
 void Robot::set_path(std::list<int> &path, const QVector<QPoint> &warehouse_points) 
 {
-    for (size_t i = 0; i < path.size(); i++)
+    while (path.empty() == false)
     {
         int point_idx = path.front();
         path.pop_front();
 
         this->add_point(warehouse_points[point_idx]);
     }
-
-    ready = false;
 }
 
 
@@ -114,7 +112,10 @@ void Robot::set_position(const QPoint &new_position)
     this->position = new_position;
 }
 
-
+void Robot::next_point() 
+{
+    path_points.pop_front();
+}
 
 /*!
  * \brief Add point to path
@@ -154,23 +155,23 @@ void Robot::move(const QPoint &vector)
 }
 
 
-/*!
- * \brief 
- */
-void Robot::set_ready()
-{
-    this->ready = true;
-}
+// /*!
+//  * \brief 
+//  */
+// void Robot::set_ready()
+// {
+//     this->ready = true;
+// }
 
-void Robot::set_not_ready()
-{
-    this->ready = false;   
-}
+// void Robot::set_not_ready()
+// {
+//     this->ready = false;   
+// }
 
-bool Robot::is_ready() 
-{
-    return ready;
-}
+// bool Robot::is_ready() 
+// {
+//     return ready;
+// }
 
 bool Robot::is_arrived() 
 {

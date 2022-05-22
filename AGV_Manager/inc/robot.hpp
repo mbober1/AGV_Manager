@@ -5,6 +5,13 @@
 #include <QVector>
 #include <QColor>
 
+enum class Robot_State
+{
+    READY,
+    DRIVING,
+    ARRIVED
+};
+
 class Robot
 {
 public:
@@ -17,13 +24,14 @@ public:
     void add_point(const QPoint &point);
     void move(const QPoint &vector);
 
-    void set_ready();
-    void set_not_ready();
-    bool is_ready();
+    // void set_ready();
+    // void set_not_ready();
+    // bool is_ready();
     bool is_arrived();
 
     void set_path(std::list<int> &path, const QVector<QPoint> &warehouse_points);
     void clear_path();
+    void next_point();
 
     int get_path_len();
     int get_progress();
@@ -33,12 +41,13 @@ public:
 
     QColor MainColor;
     QColor SecondColor;
+    Robot_State state;
 
 private:
     QPoint position;
     QVector<QPoint> path_points;
     int get_len(const QPoint &point1, const QPoint &point2);
-    bool ready;
+    // bool ready;
     int id;
 
 };
