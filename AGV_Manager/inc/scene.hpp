@@ -6,6 +6,10 @@
 #include "inc/robot.hpp"
 #include "inc/Stage.hpp"
 
+#define LINE_SIZE 6
+#define LAST_POINT_SIZE 6
+#define ROBOT_POINT_SIZE 7
+
 class Scene : public QWidget
 {
     Q_OBJECT
@@ -18,14 +22,11 @@ private:
     QVector<Robot> robots_list;
     Stage* backend;
     QTimer* animation_timer;
-    int last_point_size = 6;
-    int robot_point_size = 7;
-    int line_size = 6;
+    QVector<QPoint> warehouse_points;
 
     void animation_update();
-    QVector<QPoint> create_grid(size_t width, size_t height);
-    QVector<QPoint> warehouse_points;
-    void animate(Robot &agv, QPoint next_point, QPoint current_position);
+    const QVector<QPoint> create_grid(size_t width, size_t height);
+    void animate(Robot &agv, const QPoint &next_point, const QPoint &current_position);
 
 signals:
     void test(int progress);

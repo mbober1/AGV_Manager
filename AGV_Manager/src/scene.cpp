@@ -55,7 +55,7 @@ Scene::Scene(QWidget *parent)
 
     this->robots_list.append(Robot(get_current_position(0), ROBOT_RED_FIRST_COLOR, ROBOT_RED_SECOND_COLOR, 0));
     this->robots_list.append(Robot(get_current_position(1), ROBOT_GREEN_FIRST_COLOR, ROBOT_GREEN_SECOND_COLOR, 1));
-    // this->robots_list.append(Robot(ROBOT_BLUE_HOME, ROBOT_BLUE_FIRST_COLOR, ROBOT_BLUE_SECOND_COLOR, 3));
+    // this->robots_list.append(Robot(get_current_position(2), ROBOT_BLUE_FIRST_COLOR, ROBOT_BLUE_SECOND_COLOR, 2));
 
 
     connect(animation_timer, &QTimer::timeout, this, &Scene::animation_update);
@@ -84,19 +84,19 @@ void Scene::paintEvent(QPaintEvent *event)
                 path.lineTo(point);
             }
 
-            painter.setPen(QPen(agv.SecondColor, this->line_size, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+            painter.setPen(QPen(agv.SecondColor, LINE_SIZE, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
             painter.drawPath(path);
 
 
             // drawing last point
             painter.setBrush(QBrush(agv.SecondColor));
-            painter.drawEllipse(agv.get_path().back(), this->last_point_size, this->last_point_size);
+            painter.drawEllipse(agv.get_path().back(), LAST_POINT_SIZE, LAST_POINT_SIZE);
         }
 
         // drawing actuall position
-        painter.setPen(QPen(agv.MainColor, this->line_size, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+        painter.setPen(QPen(agv.MainColor, LINE_SIZE, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
         painter.setBrush(QBrush(agv.MainColor));
-        painter.drawEllipse(agv.get_position(), this->robot_point_size, this->robot_point_size);
+        painter.drawEllipse(agv.get_position(), ROBOT_POINT_SIZE, ROBOT_POINT_SIZE);
 
         // debug
         // for (auto &point : warehouse_points)
@@ -191,7 +191,6 @@ void Scene::animation_update()
         {
             next_turn = false;
         }
-        
     }
 
     if (next_turn == true)
@@ -200,12 +199,11 @@ void Scene::animation_update()
     }
     
         
-
     repaint();
 
 }
 
-void Scene::animate(Robot &agv, QPoint next_point, QPoint current_position)
+void Scene::animate(Robot &agv, const QPoint &next_point, const QPoint &current_position)
 {
     // animate X axis
     if (current_position.x() > next_point.x())
@@ -229,7 +227,7 @@ void Scene::animate(Robot &agv, QPoint next_point, QPoint current_position)
 }
 
 
-QVector<QPoint> Scene::create_grid(size_t width, size_t height)
+const QVector<QPoint> Scene::create_grid(size_t width, size_t height)
 {
     QVector<QPoint> results;
 

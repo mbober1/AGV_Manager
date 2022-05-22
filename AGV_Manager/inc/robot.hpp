@@ -1,5 +1,4 @@
-#ifndef ROBOT_HPP
-#define ROBOT_HPP
+#pragma once
 
 #include <QPoint>
 #include <QVector>
@@ -47,19 +46,6 @@ private:
     QPoint position;
     QVector<QPoint> path_points;
     int get_len(const QPoint &point1, const QPoint &point2);
-    // bool ready;
     int id;
 
 };
-
-#endif // ROBOT_HPP
-
-
-// set_path  -> return_paths
-// set_position
-// aminacja 
-// set_ready
-
-// jeżeli wszystkie ready
-//     clear_path
-//     make_moves
