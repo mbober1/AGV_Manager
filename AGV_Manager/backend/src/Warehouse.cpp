@@ -14,7 +14,7 @@ void Warehouse::print()
 {
     Matrix_layout_p->print();
 
-    for( auto i = 0u; i < this->Warehouse_graph.size(); i ++ )
+    /* for( auto i = 0u; i < this->Warehouse_graph.size(); i ++ )
     {
         std::cout << i << ": ";
         for( auto j = 0u; j < Warehouse_graph[i].size(); j++ )
@@ -22,7 +22,7 @@ void Warehouse::print()
             std::cout << Warehouse_graph[i][j].target << " ";
         }
         std::cout << std::endl;
-    }
+    } */
 }
 
 
@@ -63,6 +63,54 @@ void Warehouse::create_graph()
     IntMatrix * pTemp = this->Matrix_layout_p.get();
 
     for(auto i = 0u; i < vector.size(); i++)
+    {
+        if( (i+1) % (columns_num) != 0 || i == 0)
+        {
+            if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i+1] == IT_IS_PATH )
+            {
+                vector[i].push_back(neighbor(i+1));
+            }
+        }
+    }
+      
+    for(auto i = 0u; i < vector.size(); i++)
+    {
+        if( i % columns_num != 0 )
+        {
+            if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i-1] == IT_IS_PATH )
+            {
+                vector[i].push_back(neighbor(i-1));
+            }
+        }
+    }
+      
+
+    for(auto i = 0u; i < vector.size(); i++)
+    {
+        if(i < columns_num*row_num-columns_num)
+        {
+            if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i+columns_num] == IT_IS_PATH )
+            {
+                vector[i].push_back(neighbor(i+columns_num));
+            }
+        }
+    }
+
+    for(auto i = 0u; i < vector.size(); i++)
+    {
+        if(i > columns_num)
+        {
+            if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i-columns_num] == IT_IS_PATH )
+            {
+                vector[i].push_back(neighbor(i-columns_num));
+            }
+        }
+    }
+
+
+
+
+    /* for(auto i = 0u; i < vector.size(); i++)
     {   
         if( i < columns_num )
         {  
@@ -123,7 +171,7 @@ void Warehouse::create_graph()
         }
         
     }
-
+ */
     /* std::cout << " size " << vector.size() << std::endl; */
     this->Warehouse_graph = vector;
 

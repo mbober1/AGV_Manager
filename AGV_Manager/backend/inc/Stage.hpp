@@ -3,7 +3,7 @@
 #include "Warehouse.hpp"
 #include "AGV.hpp"
 #include "Task.hpp"
-#define STAR_POSITION 3
+#define STAR_POSITION 0
 
 
 enum vehicle_num    

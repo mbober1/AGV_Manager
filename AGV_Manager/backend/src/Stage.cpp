@@ -9,11 +9,11 @@ Stage::Stage(const char * filename_warehouse, const char* filename_tasks, vehicl
 
 void Stage::print_info()
 {
-/*     this->Warehouse_object.print();
+    this->Warehouse_object.print();
     for(const auto& it: this->tasks_to_do)
     {
         std::cout << "task id: " << it.task_id << " target: " << it.target << std::endl;
-    } */
+    }
 
     for(auto& it: this->AGV_vehicles)
     {
