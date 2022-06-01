@@ -16,6 +16,7 @@ void AGV::print_info()
         std::cout << it << " "; 
     }
     std::cout << std::endl;
+    std::cout << std::endl;
 
 }
 

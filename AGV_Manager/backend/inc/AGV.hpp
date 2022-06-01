@@ -30,6 +30,7 @@ AGV(const int id, const int current_pos);
 int return_id() {return this->id;} // using to return AGV id
 int return_current_pos() {return this->current_pos;}// using to return AGV current_pos
 bool return_status() {return this->in_use;} // returns current status of the AGV
+float return_task_percent() {return this->task_percent;} // returns current status of the AGV
 
 void print_info(); // using to print info about AGV object
 

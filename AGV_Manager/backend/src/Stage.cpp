@@ -42,7 +42,7 @@ bool Stage::read_tasks_from_file(const char * filename)
 
 void Stage::add_vehicles(vehicle_num option)
 {
-    for(auto i = 1; i < option + 1; i++)
+    for(auto i = 0; i < option; i++)
     {
         AGV temp_object(i, STAR_POSITION);
         AGV_vehicles.push_back(std::move(temp_object));
@@ -58,15 +58,15 @@ void Stage::add_task_to_vehicle(int AGV_id)
     }
     else
     {
-        if(! AGV_vehicles[AGV_id - 1].return_status())
+        if(! AGV_vehicles[AGV_id].return_status())
         {
 
             Task temp_task = tasks_to_do.front();
-            std::list<int> temp_path=std::move(Warehouse_object.compute_path_Dijkstra(AGV_vehicles[AGV_id-1].return_current_pos(),temp_task.target));
+            std::list<int> temp_path=std::move(Warehouse_object.compute_path_Dijkstra(AGV_vehicles[AGV_id].return_current_pos(),temp_task.target));
             tasks_to_do.pop_front();
 
             if(!temp_path.empty())
-                AGV_vehicles[AGV_id-1].add_task(temp_task,temp_path);
+                AGV_vehicles[AGV_id].add_task(temp_task,temp_path);
 
         }
         
@@ -140,4 +140,15 @@ bool Stage::AGVs_in_use()
     }
 
     return false;
+}
+
+
+float Stage::return_task_percent(int AGV_id)
+{
+    if(AGV_id > this->AGV_vehicles.size())
+    {
+        std::cout << "Stage::return_task_percent:  given ID is greater than the number of vehicles " << std::endl;
+        exit(1);
+    }
+    return this->AGV_vehicles[AGV_id].return_task_percent();
 }

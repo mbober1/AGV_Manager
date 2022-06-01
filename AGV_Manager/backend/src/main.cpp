@@ -10,7 +10,7 @@ int main(){
 
     stage.print_info();
     
-    for(auto i = 0; i < 90; i++)
+    do
     {
         free_agvs_id = stage.free_AGVs();
         if(!free_agvs_id.empty())
@@ -27,7 +27,11 @@ int main(){
         }
         stage.make_moves();
         stage.print_info();
-    }
+    }while (stage.AGVs_in_use() || !stage.empty_task_list());
+
+   std::cout << stage.return_task_percent(2) << std::endl;
+   
+    
     
 
 

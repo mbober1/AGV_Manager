@@ -98,4 +98,11 @@ bool empty_task_list() {return this->tasks_to_do.empty();};
 bool AGVs_in_use();
 
 
+/*
+ * Method to return task percent of particular AGV
+ * @return - task percent
+ */
+float return_task_percent(int AGV_id);
+
+
 };
