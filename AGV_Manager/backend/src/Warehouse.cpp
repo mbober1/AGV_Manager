@@ -107,75 +107,7 @@ void Warehouse::create_graph()
         }
     }
 
-
-
-
-    /* for(auto i = 0u; i < vector.size(); i++)
-    {   
-        if( i < columns_num )
-        {  
-            if( i != columns_num -1 )
-                if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i+1] == IT_IS_PATH )
-                {
-                        vector[i].push_back(neighbor(i+1));
-                }
-            if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i+columns_num] == IT_IS_PATH )
-            {
-                vector[i].push_back(neighbor(i+columns_num));
-            }
-            if(i != 0)
-                if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i-1] == IT_IS_PATH )
-                {
-                    vector[i].push_back(neighbor(i-1));
-                }
-        }
-    
-        else if(i > (row_num*columns_num - columns_num -1))
-        {
-            if( i != row_num*columns_num -1 )
-                if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i+1] == IT_IS_PATH ) 
-                {
-                        vector[i].push_back(neighbor(i+1));
-                }
-            if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i-columns_num] == IT_IS_PATH )
-            {
-                vector[i].push_back(neighbor(i-columns_num));
-            }
-            if(i != row_num*(columns_num-1))
-                if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i-1] == IT_IS_PATH ) 
-                {
-                    vector[i].push_back(neighbor(i-1));
-                }
-        }
-
-        else
-        {
-            if( !(i % (columns_num-1) == 0) )
-                if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i+1] == IT_IS_PATH )
-                {
-                        vector[i].push_back(neighbor(i+1));
-                }
-            if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i-columns_num] == IT_IS_PATH )
-            {
-                vector[i].push_back(neighbor(i-columns_num));
-            }
-            if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i+columns_num] == IT_IS_PATH )
-            {
-                vector[i].push_back(neighbor(i+columns_num));
-            }
-            if( !(i % columns_num == 0) )
-                if( (*pTemp)[i] == IT_IS_PATH && (*pTemp)[i-1] == IT_IS_PATH )
-                {
-                    vector[i].push_back(neighbor(i-1));
-                }
-        }
-        
-    }
- */
-    /* std::cout << " size " << vector.size() << std::endl; */
     this->Warehouse_graph = vector;
-
-
 }
 
 

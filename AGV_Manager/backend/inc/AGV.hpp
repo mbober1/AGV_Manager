@@ -13,6 +13,9 @@ int current_pos; // current position of vehicle
 bool in_use;  // does it have task?
 unsigned int target; // Point of the warehouse to achieve
 std::list<int> path_to_target;  // list including points to the target 
+int road_length = 0;  // The length of the road
+float task_percent = 0; // task perform percent
+
 public:
 AGV() = delete; // to prevent using a default constructor
 

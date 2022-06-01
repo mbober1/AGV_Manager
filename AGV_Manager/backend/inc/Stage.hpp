@@ -38,22 +38,17 @@ bool read_tasks_from_file(const char * filename);
  */
 void add_vehicles(vehicle_num option);
 
-/*
- * Method to add a task to AGV vehicle
- * @param[in] AGV_id - ID of an AGV vehicle which will have new task
- */
-void add_task_to_vehicle(int AGV_id);
-
 public:
 
 Stage() = delete; // to prevent using a default constructor
+
+
 /*
  * The parametric constructor - allows for setting data to the Warehouse object and the Tasks list
  * @param[in] filename_warehouse - name of file storing data to the Warehouse object
  * @param[in] filename_tasks - name of file storing data to the Tasks list
  */
 Stage(const char * filename_warehouse, const char* filename_tasks, vehicle_num option);
-
 
 
 void print_info();  // to print info about Stage's components
@@ -77,5 +72,30 @@ std::vector<int> return_current_positions();
  * @return vector of paths 
  */
 std::vector<std::list<int>> return_paths();
+
+/*
+ * Method to add a task to AGV vehicle
+ * @param[in] AGV_id - ID of an AGV vehicle which will have new task
+ */
+void add_task_to_vehicle(int AGV_id);
+
+/*
+ * Method to return vector of free Agvs
+ * @return - vector of free AGVs
+ */
+std::vector<int> free_AGVs();
+
+/*
+ * Method to check whether task list is empty
+ * @return - true if nothing to assign, else false
+ */
+bool empty_task_list() {return this->tasks_to_do.empty();};
+
+/*
+ * Method to check whether all AGVs finished their tasks
+ * @return - true if all agvs finished their tasks, else false
+ */
+bool AGVs_in_use();
+
 
 };

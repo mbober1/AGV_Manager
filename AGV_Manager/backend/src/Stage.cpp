@@ -9,12 +9,7 @@ Stage::Stage(const char * filename_warehouse, const char* filename_tasks, vehicl
 
 void Stage::print_info()
 {
-    this->Warehouse_object.print();
-    for(const auto& it: this->tasks_to_do)
-    {
-        std::cout << "task id: " << it.task_id << " target: " << it.target << std::endl;
-    }
-
+    /* this->Warehouse_object.print(); */
     for(auto& it: this->AGV_vehicles)
     {
         it.print_info();
@@ -63,11 +58,18 @@ void Stage::add_task_to_vehicle(int AGV_id)
     }
     else
     {
-        Task temp_task = tasks_to_do.front();
-        std::list<int> temp_path=std::move(Warehouse_object.compute_path_Dijkstra(AGV_vehicles[AGV_id-1].return_current_pos(),temp_task.target));
-        tasks_to_do.pop_front();
-        if(!temp_path.empty())
-            AGV_vehicles[AGV_id-1].add_task(temp_task,temp_path);
+        if(! AGV_vehicles[AGV_id - 1].return_status())
+        {
+
+            Task temp_task = tasks_to_do.front();
+            std::list<int> temp_path=std::move(Warehouse_object.compute_path_Dijkstra(AGV_vehicles[AGV_id-1].return_current_pos(),temp_task.target));
+            tasks_to_do.pop_front();
+
+            if(!temp_path.empty())
+                AGV_vehicles[AGV_id-1].add_task(temp_task,temp_path);
+
+        }
+        
     }
 }
 
@@ -78,14 +80,6 @@ void Stage::make_moves()
         if(it.return_status())
         {
             it.make_move();
-        }
-        else
-        {
-            if(!this->tasks_to_do.empty())
-            {
-                add_task_to_vehicle(it.return_id());
-                it.make_move();
-            }
         }
     }
 }
@@ -109,11 +103,41 @@ std::vector<std::list<int>> Stage::return_paths()
 {
     std::vector<std::list<int>> paths;
 
-        for(auto& it: this->AGV_vehicles)
+    for(auto& it: this->AGV_vehicles)
     {
         paths.push_back(it.return_path());
     }
 
     return paths;
 
+}
+
+
+std::vector<int> Stage::free_AGVs()
+{
+    std::vector<int> AGVs;
+
+    for(auto& it: this->AGV_vehicles)
+    {
+        if(! it.return_status())
+        {
+            AGVs.push_back(it.return_id());
+        }
+    } 
+
+    return AGVs;
+}
+
+
+bool Stage::AGVs_in_use()
+{
+    for(auto& it: this->AGV_vehicles)
+    {
+        if(it.return_status())
+        {
+            return  true;
+        }
+    }
+
+    return false;
 }
