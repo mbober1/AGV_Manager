@@ -152,3 +152,14 @@ float Stage::return_task_percent(int AGV_id)
     }
     return this->AGV_vehicles[AGV_id].return_task_percent();
 }
+
+
+int Stage::return_task_id(int AGV_id)
+{
+    if(AGV_id > this->AGV_vehicles.size())
+    {
+        std::cout << "Stage::return_task_percent:  given ID is greater than the number of vehicles " << std::endl;
+        exit(1);
+    }
+    return this->AGV_vehicles[AGV_id].return_task_id();
+}

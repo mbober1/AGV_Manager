@@ -104,5 +104,11 @@ bool AGVs_in_use();
  */
 float return_task_percent(int AGV_id);
 
+/*
+ * Method to return task id of particular AGV
+ * @return - task percent
+ */
+int return_task_id(int AGV_id);
+
 
 };

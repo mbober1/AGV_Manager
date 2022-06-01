@@ -30,6 +30,7 @@ void AGV::add_task(const Task task_to_assign , const std::list<int> path_to_targ
         this->path_to_target = std::move(path_to_target);
         this->road_length = path_to_target.size();
         this->task_percent = 0.0;
+        this->current_task = task_to_assign.task_id;
     }
     
 }
