@@ -22,10 +22,10 @@
 #define get_block_center(block)     (block * WAREHOUSE_BLOCK + WAREHOUSE_BLOCK/ 2)
 #define WAREHOUSE_POINT_COLOR       QColor(0x00, 0x00, 0x00)
 
-// #define WAREHOUSE_DATA ("../resources/data/warehouse.data")
-// #define TASK_DATA ("../resources/data/task.data")
-#define WAREHOUSE_DATA ("/home/mbober/Documents/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/warehouse.data")
-#define TASK_DATA ("/home/mbober/Documents/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/task.data")
+#define WAREHOUSE_DATA ("../resources/data/warehouse.data")
+#define TASK_DATA ("../resources/data/task.data")
+// #define WAREHOUSE_DATA ("/home/mbober/Documents/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/warehouse.data")
+// #define TASK_DATA ("/home/mbober/Documents/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/task.data")
 #define get_backend_position(agv_id)      (warehouse_points[backend->return_current_position(agv_id)])
 
 
@@ -58,7 +58,7 @@ Scene::Scene(QWidget *parent)
     this->robots_list.append(Robot(get_backend_position(2), ROBOT_BLUE_FIRST_COLOR, ROBOT_BLUE_SECOND_COLOR, 2));
 
     connect(animation_timer, &QTimer::timeout, this, &Scene::animation_update);
-    animation_timer->start(1000 / 480); // about 60 FPS
+    animation_timer->start(1000 / 120); // about 60 FPS
 }
 
 
