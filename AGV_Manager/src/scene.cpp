@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QBrush>
+#include <QDebug>
 
 #define ROBOT_RED_FIRST_COLOR       QColor(0xB7, 0x1C, 0x1C)
 #define ROBOT_RED_SECOND_COLOR      QColor(0xEF, 0x53, 0x50, 0xAA)
@@ -16,10 +17,16 @@
 #define ROBOT_BLUE_HOME             QPoint(50,270)
 
 #define WAREHOUSE_WIDTH             1000
-#define WAREHOUSE_HEIGTH            700
+#define WAREHOUSE_HEIGTH            720
 #define WAREHOUSE_BLOCK             50
 #define get_block_center(block)     (block * WAREHOUSE_BLOCK + WAREHOUSE_BLOCK/ 2)
 #define WAREHOUSE_POINT_COLOR       QColor(0x00, 0x00, 0x00)
+
+// #define WAREHOUSE_DATA ("../resources/data/warehouse.data")
+// #define TASK_DATA ("../resources/data/task.data")
+#define WAREHOUSE_DATA ("/home/mbober/Documents/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/warehouse.data")
+#define TASK_DATA ("/home/mbober/Documents/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/task.data")
+#define get_backend_position(agv_id)      (warehouse_points[backend->return_current_position(agv_id)])
 
 
 /*!
@@ -27,7 +34,7 @@
  */
 Scene::Scene(QWidget *parent)
     : QWidget{parent},
-      backend(new Stage("/home/mbober/Documents/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/warehouse.data")),
+      backend(new Stage(WAREHOUSE_DATA, TASK_DATA, option_3)),
       animation_timer(new QTimer(this))
 {
 
@@ -43,37 +50,15 @@ Scene::Scene(QWidget *parent)
     this->setPalette(palette);
     this->show();
 
+    this->warehouse_points = create_grid(backend->columns_num(), backend->rows_num());
 
-    this->robots.append(Robot(ROBOT_RED_HOME, ROBOT_RED_FIRST_COLOR, ROBOT_RED_SECOND_COLOR));
-    this->robots.append(Robot(ROBOT_GREEN_HOME, ROBOT_GREEN_FIRST_COLOR, ROBOT_GREEN_SECOND_COLOR));
-    this->robots.append(Robot(ROBOT_BLUE_HOME, ROBOT_BLUE_FIRST_COLOR, ROBOT_BLUE_SECOND_COLOR));
 
-    this->warehouse_points = create_grid(backend->Warehouse_object.columns_num(), backend->Warehouse_object.rows_num());
-
-    // this->robots[0].add_point(QPoint(940, 50));
-    // this->robots[0].add_point(QPoint(940, 270));
-    // this->robots[0].add_point(QPoint(250, 270));
-    // this->robots[0].add_point(QPoint(250, 600));
-    // this->robots[0].add_point(QPoint(750, 600));
-    // this->robots[0].add_point(QPoint(750, 630));
-
-    // this->robots[1].add_point(QPoint(590, 150));
-    // this->robots[1].add_point(QPoint(590, 270));
-    // this->robots[1].add_point(QPoint(940, 270));
-    // this->robots[1].add_point(QPoint(940, 600));
-    // this->robots[1].add_point(QPoint(750, 600));
-    // this->robots[1].add_point(QPoint(750, 630));
-
-    // this->robots[2].add_point(QPoint(590, 270));
-    // this->robots[2].add_point(QPoint(590, 380));
-    // this->robots[2].add_point(QPoint(250, 380));
-    // this->robots[2].add_point(QPoint(250, 600));
-    // this->robots[2].add_point(QPoint(750, 600));
-    // this->robots[2].add_point(QPoint(750, 630));
+    this->robots_list.append(Robot(get_backend_position(0), ROBOT_RED_FIRST_COLOR, ROBOT_RED_SECOND_COLOR, 0));
+    this->robots_list.append(Robot(get_backend_position(1), ROBOT_GREEN_FIRST_COLOR, ROBOT_GREEN_SECOND_COLOR, 1));
+    this->robots_list.append(Robot(get_backend_position(2), ROBOT_BLUE_FIRST_COLOR, ROBOT_BLUE_SECOND_COLOR, 2));
 
     connect(animation_timer, &QTimer::timeout, this, &Scene::animation_update);
-    animation_timer->start(1000 / 60); // about 60 FPS
-
+    animation_timer->start(1000 / 480); // about 60 FPS
 }
 
 
@@ -82,7 +67,7 @@ Scene::Scene(QWidget *parent)
  */
 void Scene::paintEvent(QPaintEvent *event)
 {
-    for (Robot &agv : this->robots)
+    for (Robot &agv : this->robots_list)
     {
         QPainter painter(this);
 
@@ -97,28 +82,37 @@ void Scene::paintEvent(QPaintEvent *event)
                 path.lineTo(point);
             }
 
-            painter.setPen(QPen(agv.SecondColor, this->line_size, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+            painter.setPen(QPen(agv.SecondColor, LINE_SIZE, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
             painter.drawPath(path);
 
 
             // drawing last point
             painter.setBrush(QBrush(agv.SecondColor));
-            painter.drawEllipse(agv.get_path().back(), this->point_size, this->point_size);
+            painter.drawEllipse(agv.get_path().back(), LAST_POINT_SIZE, LAST_POINT_SIZE);
         }
 
         // drawing actuall position
-        painter.setPen(QPen(agv.MainColor, this->line_size, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+        painter.setPen(QPen(agv.MainColor, LINE_SIZE, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
         painter.setBrush(QBrush(agv.MainColor));
-        painter.drawEllipse(agv.get_position(), this->point_size, this->point_size);
+        painter.drawEllipse(agv.get_position(), ROBOT_POINT_SIZE, ROBOT_POINT_SIZE);
 
         // debug
-        for (auto &point : warehouse_points)
-        {
-            painter.setBrush(QBrush(WAREHOUSE_POINT_COLOR));
-            painter.drawEllipse(point, 5, 5);
-        }
+        // for (auto &point : warehouse_points)
+        // {
+        //     painter.setBrush(QBrush(WAREHOUSE_POINT_COLOR));
+        //     painter.drawEllipse(point, 5, 5);
+        // }
     }
 
+}
+
+void Scene::set_new_positions(const std::vector<int> &position_list)
+{
+    for (size_t i = 0; i < position_list.size(); i++)
+    {
+        int point_idx =  position_list[i];
+        this->robots_list[i].set_position(warehouse_points[point_idx]);
+    }
 }
 
 
@@ -127,49 +121,107 @@ void Scene::paintEvent(QPaintEvent *event)
  */
 void Scene::animation_update()
 {
+    bool make_move = true;
 
-    for (Robot &agv : this->robots)
+    for (Robot &agv : this->robots_list)
     {
-        if (agv.get_path().empty() == false)
+        if (agv.state != Robot_State::ARRIVED)
         {
-            auto position = agv.get_position();
-            auto next_point = agv.get_path().first();
+            make_move = false;
+        }
+    }
 
-            // drop point you are in
-            if (position == next_point)
+    if (make_move == true)
+    {
+        backend->make_moves();
+    }
+
+    for (Robot &agv : this->robots_list)
+    {
+        switch (agv.state)
+        {
+            case Robot_State::READY: // skończył zadanie
             {
-                agv.checkpoint();
+                backend->add_task_to_vehicle(agv.get_id());
+                refresh_task_list();
+
+                auto new_path = backend->return_path(agv.get_id());
+                agv.set_path(new_path, warehouse_points);
+
+                agv.state = Robot_State::ARRIVED;
+                break;
             }
 
-            // animate X axis
-            if (position.x() > next_point.x())
+            case Robot_State::DRIVING: // pomiędzy punktami
             {
-                agv.move(QPoint(-1, 0));
-            }
-            else if (position.x() < next_point.x())
-            {
-                agv.move(QPoint(1, 0));
+                QPoint backend_position = get_backend_position(agv.get_id());
+                QPoint current_position = agv.get_position();
+
+                if (current_position == backend_position)
+                {
+                    agv.state = Robot_State::ARRIVED;
+                    agv.next_point();
+                }
+                else
+                {
+                    animate(agv, backend_position, current_position);
+                }
+
+                break;
             }
 
-            // animate Y axis
-            if (position.y() > next_point.y())
+            case Robot_State::ARRIVED: // dojechał do punktu
             {
-                agv.move(QPoint(0, -1));
-            }
-            else if (position.y() < next_point.y())
-            {
-                agv.move(QPoint(0, 1));
+                QPoint backend_position = get_backend_position(agv.get_id());
+                QPoint current_position = agv.get_position();
+
+                if (current_position == backend_position)
+                {
+                    agv.state = Robot_State::READY;
+                }
+                else
+                {
+                    agv.state = Robot_State::DRIVING;
+                }
+                
+                break;
             }
         }
     }
 
     repaint();
+}
 
-    emit test(this->robots[0].get_progress()); // TO DO
+void Scene::animate(Robot &agv, const QPoint &next_point, const QPoint &current_position)
+{
+    // animate X axis
+    if (current_position.x() > next_point.x())
+    {
+        agv.move(QPoint(-1, 0));
+    }
+    else if (current_position.x() < next_point.x())
+    {
+        agv.move(QPoint(1, 0));
+    }
+
+    // animate Y axis
+    if (current_position.y() > next_point.y())
+    {
+        agv.move(QPoint(0, -1));
+    }
+    else if (current_position.y() < next_point.y())
+    {
+        agv.move(QPoint(0, 1));
+    }
+}
+
+void Scene::refresh_task_list()
+{
 
 }
 
-QVector<QPoint> Scene::create_grid(size_t width, size_t height) 
+
+const QVector<QPoint> Scene::create_grid(size_t width, size_t height)
 {
     QVector<QPoint> results;
 
@@ -180,6 +232,6 @@ QVector<QPoint> Scene::create_grid(size_t width, size_t height)
             results.push_back(QPoint(get_block_center(j), get_block_center(i)));
         }
     }
-    
+
     return results;
 }
