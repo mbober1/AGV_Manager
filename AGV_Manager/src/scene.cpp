@@ -26,14 +26,15 @@
 // #define TASK_DATA ("../resources/data/task.data")
 #define WAREHOUSE_DATA ("/home/mbober/Documents/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/warehouse.data")
 #define TASK_DATA ("/home/mbober/Documents/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/task.data")
-#define get_current_position(agv_id)      (warehouse_points[backend->return_current_positions(agv_id)])
+#define get_backend_position(agv_id)      (warehouse_points[backend->return_current_position(agv_id)])
+
 
 /*!
  * \brief Constructor Scene Class
  */
 Scene::Scene(QWidget *parent)
     : QWidget{parent},
-      backend(new Stage(WAREHOUSE_DATA, TASK_DATA, option_2)),
+      backend(new Stage(WAREHOUSE_DATA, TASK_DATA, option_3)),
       animation_timer(new QTimer(this))
 {
 
@@ -50,17 +51,14 @@ Scene::Scene(QWidget *parent)
     this->show();
 
     this->warehouse_points = create_grid(backend->columns_num(), backend->rows_num());
-    // backend->make_moves();
 
 
-    this->robots_list.append(Robot(get_current_position(0), ROBOT_RED_FIRST_COLOR, ROBOT_RED_SECOND_COLOR, 0));
-    this->robots_list.append(Robot(get_current_position(1), ROBOT_GREEN_FIRST_COLOR, ROBOT_GREEN_SECOND_COLOR, 1));
-    // this->robots_list.append(Robot(get_current_position(2), ROBOT_BLUE_FIRST_COLOR, ROBOT_BLUE_SECOND_COLOR, 2));
-
+    this->robots_list.append(Robot(get_backend_position(0), ROBOT_RED_FIRST_COLOR, ROBOT_RED_SECOND_COLOR, 0));
+    this->robots_list.append(Robot(get_backend_position(1), ROBOT_GREEN_FIRST_COLOR, ROBOT_GREEN_SECOND_COLOR, 1));
+    this->robots_list.append(Robot(get_backend_position(2), ROBOT_BLUE_FIRST_COLOR, ROBOT_BLUE_SECOND_COLOR, 2));
 
     connect(animation_timer, &QTimer::timeout, this, &Scene::animation_update);
-    animation_timer->start(1000 / 60); // about 60 FPS
-
+    animation_timer->start(1000 / 480); // about 60 FPS
 }
 
 
@@ -123,84 +121,75 @@ void Scene::set_new_positions(const std::vector<int> &position_list)
  */
 void Scene::animation_update()
 {
-    for (Robot &agv : this->robots_list)
-    {
-        switch (agv.state)
-        {
-            case Robot_State::READY:
-            {
-                auto new_path = backend->return_path(agv.get_id());
-
-                agv.set_path(new_path, warehouse_points);
-
-                if (agv.get_path().size() != 0)
-                {
-                    agv.state = Robot_State::DRIVING;
-                }
-                else
-                {
-                    backend->add_task_to_vehicle(agv.get_id());
-                }
-
-                break;
-            }
-
-            case Robot_State::DRIVING:
-            {
-                QPoint next_position = get_current_position(agv.get_id());
-                QPoint current_position = agv.get_position();
-
-                animate(agv, next_position, current_position);
-
-                if (current_position == next_position)
-                {
-                    agv.state = Robot_State::ARRIVED;
-                }
-
-                break;
-            }
-
-            case Robot_State::ARRIVED:
-            {
-                agv.next_point();
-
-                QPoint next_position = get_current_position(agv.get_id());
-                QPoint current_position = agv.get_position();
-
-                if (agv.get_path().size() == 0)
-                {
-                    agv.state = Robot_State::READY;
-                }
-                else if (current_position != next_position)
-                {
-                    agv.state = Robot_State::DRIVING;
-                }
-
-                break;
-            }
-        }
-    }
-
-
-
-    bool next_turn = true;
+    bool make_move = true;
 
     for (Robot &agv : this->robots_list)
     {
         if (agv.state != Robot_State::ARRIVED)
         {
-            next_turn = false;
+            make_move = false;
         }
     }
 
-    if (next_turn == true)
+    if (make_move == true)
     {
         backend->make_moves();
     }
-    
-        
-    repaint();
 
+    for (Robot &agv : this->robots_list)
+    {
+        switch (agv.state)
+        {
+            case Robot_State::READY: // skończył zadanie
+            {
+                backend->add_task_to_vehicle(agv.get_id());
+                refresh_task_list();
+
+                auto new_path = backend->return_path(agv.get_id());
+                agv.set_path(new_path, warehouse_points);
+
+                agv.state = Robot_State::ARRIVED;
+                break;
+            }
+
+            case Robot_State::DRIVING: // pomiędzy punktami
+            {
+                QPoint backend_position = get_backend_position(agv.get_id());
+                QPoint current_position = agv.get_position();
+
+                if (current_position == backend_position)
+                {
+                    agv.state = Robot_State::ARRIVED;
+                    agv.next_point();
+                }
+                else
+                {
+                    animate(agv, backend_position, current_position);
+                }
+
+                break;
+            }
+
+            case Robot_State::ARRIVED: // dojechał do punktu
+            {
+                QPoint backend_position = get_backend_position(agv.get_id());
+                QPoint current_position = agv.get_position();
+
+                if (current_position == backend_position)
+                {
+                    agv.state = Robot_State::READY;
+                }
+                else
+                {
+                    agv.state = Robot_State::DRIVING;
+                }
+                
+                break;
+            }
+        }
+    }
+
+    repaint();
 }
 
 void Scene::animate(Robot &agv, const QPoint &next_point, const QPoint &current_position)
@@ -224,6 +213,11 @@ void Scene::animate(Robot &agv, const QPoint &next_point, const QPoint &current_
     {
         agv.move(QPoint(0, 1));
     }
+}
+
+void Scene::refresh_task_list()
+{
+
 }
 
 

@@ -27,6 +27,7 @@ private:
     void animation_update();
     const QVector<QPoint> create_grid(size_t width, size_t height);
     void animate(Robot &agv, const QPoint &next_point, const QPoint &current_position);
+    void refresh_task_list();
 
 signals:
     void test(int progress);

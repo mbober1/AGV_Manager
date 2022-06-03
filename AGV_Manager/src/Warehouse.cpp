@@ -14,7 +14,7 @@ void Warehouse::print()
 {
     Matrix_layout_p->print();
 
-    for( auto i = 0u; i < this->Warehouse_graph.size(); i ++ )
+    /* for( auto i = 0u; i < this->Warehouse_graph.size(); i ++ )
     {
         std::cout << i << ": ";
         for( auto j = 0u; j < Warehouse_graph[i].size(); j++ )
@@ -22,7 +22,7 @@ void Warehouse::print()
             std::cout << Warehouse_graph[i][j].target << " ";
         }
         std::cout << std::endl;
-    }
+    } */
 }
 
 
@@ -107,10 +107,7 @@ void Warehouse::create_graph()
         }
     }
 
-    /* std::cout << " size " << vector.size() << std::endl; */
     this->Warehouse_graph = vector;
-
-
 }
 
 

@@ -41,6 +41,7 @@ void Robot::clear_path()
 
 void Robot::set_path(std::list<int> &path, const QVector<QPoint> &warehouse_points) 
 {
+    clear_path();
     while (path.empty() == false)
     {
         int point_idx = path.front();
@@ -114,7 +115,14 @@ void Robot::set_position(const QPoint &new_position)
 
 void Robot::next_point() 
 {
-    path_points.pop_front();
+    if (path_points.empty())
+    {
+        return;
+    }
+    else
+    {
+        path_points.pop_front();
+    }
 }
 
 /*!
