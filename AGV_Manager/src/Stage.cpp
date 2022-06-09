@@ -41,9 +41,33 @@ bool Stage::read_tasks_from_file(const char * filename)
 
 void Stage::add_vehicles(vehicle_num option)
 {
+    std::vector<int> positions_vec;
+
+    switch(option)
+    {
+    case 1:
+        positions_vec.push_back(STAR_POSITION_1);
+        break;
+
+    case 2:
+        positions_vec.push_back(STAR_POSITION_1);
+        positions_vec.push_back(STAR_POSITION_2);
+        break;
+
+    case 3:
+        positions_vec.push_back(STAR_POSITION_1);
+        positions_vec.push_back(STAR_POSITION_2);
+        positions_vec.push_back(STAR_POSITION_3);
+        break;
+
+    default:
+        break;
+
+    }
+
     for(auto i = 0; i < option; i++)
     {
-        AGV temp_object(i, STAR_POSITION);
+        AGV temp_object(i, positions_vec[i]);
         AGV_vehicles.push_back(std::move(temp_object));
     }
 }
@@ -52,7 +76,15 @@ void Stage::add_task_to_vehicle(int AGV_id)
 {
     if(tasks_to_do.empty())
     {
-        return;
+      if(! AGV_vehicles[AGV_id].return_status())
+      {
+          if(AGV_vehicles[AGV_id].return_current_pos() != AGV_vehicles[AGV_id].return_home_pos())
+          {
+              this->back_to_start_position(AGV_id);
+          }
+      }
+
+
     }
     else
     {
@@ -162,4 +194,16 @@ int Stage::return_task_id(int AGV_id)
         exit(1);
     }
     return this->AGV_vehicles[AGV_id].return_task_id();
+}
+
+void Stage::back_to_start_position(int AGV_id)
+{
+    Task return_home;
+    std::list<int> path_to_home;
+    return_home.task_id = 0;
+    return_home.target = this->AGV_vehicles[AGV_id].return_home_pos();
+    path_to_home = Warehouse_object.compute_path_Dijkstra(this->AGV_vehicles[AGV_id].return_current_pos(), return_home.target);
+
+    if(!this->AGV_vehicles[AGV_id].return_status())
+        this->AGV_vehicles[AGV_id].add_task(return_home, path_to_home);
 }

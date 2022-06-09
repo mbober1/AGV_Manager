@@ -1,6 +1,6 @@
 #include "inc/AGV.hpp"
 
-AGV::AGV(const int id, const int current_pos) : id{id}, current_pos{current_pos}
+AGV::AGV(const int id, const int current_pos) : id{id}, current_pos{current_pos}, home_pos{current_pos}
 {
     in_use = false;
 }
