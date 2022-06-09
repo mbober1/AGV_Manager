@@ -17,6 +17,7 @@ SOURCES += \
     src/Warehouse.cpp \
     src/Stage.cpp \
     src/taskitem.cpp \
+    src/TraficSystemControl.cpp
    
 
 HEADERS += \
@@ -29,6 +30,7 @@ HEADERS += \
     inc/Warehouse.hpp \
     inc/Stage.hpp \
     inc/Dynamic2DMatrix.hpp \
+    inc/TraficSystemControl.hpp
    
 
 FORMS += \
