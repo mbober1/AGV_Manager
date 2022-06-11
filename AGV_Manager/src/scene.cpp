@@ -2,7 +2,6 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QBrush>
-#include <QDebug>
 
 #define ROBOT_RED_FIRST_COLOR       QColor(0xB7, 0x1C, 0x1C)
 #define ROBOT_RED_SECOND_COLOR      QColor(0xEF, 0x53, 0x50, 0xAA)
@@ -218,6 +217,30 @@ void Scene::animate(Robot &agv, const QPoint &next_point, const QPoint &current_
 void Scene::refresh_task_list()
 {
 
+}
+
+void Scene::set_simulation_speed(int speed) 
+{
+    if(speed == 0)
+    {
+        animation_timer->stop();
+    }
+    else
+    {
+        animation_timer->setInterval(1000 / speed);
+    }
+}
+
+void Scene::timer_state(bool state)
+{
+    if(state)
+    {
+        animation_timer->start();
+    }
+    else
+    {
+        animation_timer->stop();
+    }
 }
 
 
