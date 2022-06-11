@@ -13,15 +13,19 @@ MainWindow::MainWindow(QWidget *parent)
     , scene(new Scene(this))
 {
     ui->setupUi(this);
+    connect(ui->speed_box, QOverload<int>::of(&QSpinBox::valueChanged), scene, &Scene::set_simulation_speed);
 
-    connect(scene, &Scene::test, this, &MainWindow::test);
+    connect(ui->start_button, &QPushButton::clicked, [this]()
+    {
+        static bool state = true;
+
+        state = !state;
+        scene->timer_state(state);
+    });
 
     add_list_item("AGV Red");
     add_list_item("AGV Green");
     add_list_item("AGV Blue");
-    add_list_item("Not assigned");
-    add_list_item("Not assigned");
-    add_list_item("Not assigned");
 
 }
 
