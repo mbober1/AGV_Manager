@@ -5,7 +5,8 @@ Stage::Stage(const char * filename_warehouse, const char* filename_tasks, vehicl
     this->Warehouse_object = read_from_file(filename_warehouse);
     this->read_tasks_from_file(filename_tasks);
     this->add_vehicles(option);
-    Collision_avoidance_p = new TraficSystemControl(Warehouse_object);
+    Collision_avoidance_p = std::make_unique<TrafficSystemControl>(this->Warehouse_object, this->AGV_vehicles);
+    Collision_avoidance_p.get()->print();
 
 }
 

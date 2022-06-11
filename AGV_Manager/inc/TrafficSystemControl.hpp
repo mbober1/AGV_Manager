@@ -1,8 +1,7 @@
 #pragma once
 
 #include "Warehouse.hpp"
-#include "AGV.hpp"
-#include "Stage.hpp"
+#include "inc/AGV.hpp"
 #include <map>
 #include <utility>
 
@@ -13,10 +12,9 @@ enum class Point_State
     Reserved
 };
 
-
-using status_path = std::list<std::pair< Point_State, int>>;
-
-
+using status_points = std::list<std::pair< Point_State, int>>;
+using shared_points = std::vector<std::list<int>>;
+using AGVs =  std::vector<AGV>;
 /*
  * Class to handle collision protection. Created according to:
  * "Dynamic Resource Reservation Based Collision and Deadlock Prevention for Multi-AGVs"
@@ -25,11 +23,16 @@ using status_path = std::list<std::pair< Point_State, int>>;
  */
 class TrafficSystemControl{
 
-status_path points_with_status;
+status_points points_with_status;
+AGVs AGVs_vector;
+shared_points shared_points_vector;
+
+
+
 public:
 
 
-    TraficSystemControl(Warehouse & warehouse);
+    TrafficSystemControl(Warehouse  &warehouse, AGVs &AGVs_vector);
 
 
     bool go_ahead() {return true;}
@@ -37,3 +40,6 @@ public:
 
 
 };
+
+
+

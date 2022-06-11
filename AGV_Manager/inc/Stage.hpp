@@ -3,7 +3,7 @@
 #include "Warehouse.hpp"
 #include "AGV.hpp"
 #include "Task.hpp"
-#include "TraficSystemControl.hpp"
+#include "inc/TrafficSystemControl.hpp"
 
 #define STAR_POSITION_1 272
 #define STAR_POSITION_2 268
@@ -24,7 +24,7 @@ class Stage{
 Warehouse Warehouse_object; 
 AGVs AGV_vehicles;
 Tasks tasks_to_do;
-TraficSystemControl *Collision_avoidance_p;
+std::unique_ptr<TrafficSystemControl> Collision_avoidance_p = nullptr;
 
 
 
