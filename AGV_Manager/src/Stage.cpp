@@ -2,9 +2,11 @@
 
 Stage::Stage(const char * filename_warehouse, const char* filename_tasks, vehicle_num option)
 {
-    this->Warehouse_object= read_from_file(filename_warehouse);
+    this->Warehouse_object = read_from_file(filename_warehouse);
     this->read_tasks_from_file(filename_tasks);
     this->add_vehicles(option);
+    Collision_avoidance_p = new TraficSystemControl(Warehouse_object);
+
 }
 
 void Stage::print_info()

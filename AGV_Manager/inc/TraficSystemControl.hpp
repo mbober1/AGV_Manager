@@ -3,6 +3,18 @@
 #include "Warehouse.hpp"
 #include "AGV.hpp"
 #include "Stage.hpp"
+#include <map>
+#include <utility>
+
+
+enum class Point_State
+{
+    Free,
+    Reserved
+};
+
+
+using status_path = std::list<std::pair< Point_State, int>>;
 
 
 /*
@@ -13,7 +25,15 @@
  */
 class TraficSystemControl{
 
-
+status_path points_with_status;
 public:
+
+
+    TraficSystemControl(Warehouse & warehouse);
+
+
+    bool go_ahead() {return true;}
+    void print();
+
 
 };

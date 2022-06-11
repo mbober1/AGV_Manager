@@ -96,6 +96,9 @@ int rows_num() {return Matrix_layout_p.get()->rows_number();}
  * @return - The number of matrix columns
  */
 int columns_num(){return Matrix_layout_p.get()->columns_number();}
+
+
+int return_graph_size(){return this->Warehouse_graph.size();} // simple method to return the graph size
 };
 
 
