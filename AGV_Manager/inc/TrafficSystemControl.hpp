@@ -13,7 +13,7 @@ enum class Point_State
 };
 
 using status_points = std::list<std::pair< Point_State, int>>;
-using shared_points = std::vector<std::list<int>>;
+using shared_path_points = std::vector<std::list<int>>;
 using AGVs =  std::vector<AGV>;
 /*
  * Class to handle collision protection. Created according to:
@@ -25,7 +25,7 @@ class TrafficSystemControl{
 
 status_points points_with_status;
 AGVs AGVs_vector;
-shared_points shared_points_vector;
+shared_path_points shared_points_vector;
 
 
 
@@ -37,6 +37,8 @@ public:
 
     bool go_ahead() {return true;}
     void print();
+
+    void set_shared_path_points();
 
 
 };

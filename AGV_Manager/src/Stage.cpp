@@ -5,8 +5,8 @@ Stage::Stage(const char * filename_warehouse, const char* filename_tasks, vehicl
     this->Warehouse_object = read_from_file(filename_warehouse);
     this->read_tasks_from_file(filename_tasks);
     this->add_vehicles(option);
-    Collision_avoidance_p = std::make_unique<TrafficSystemControl>(this->Warehouse_object, this->AGV_vehicles);
-    Collision_avoidance_p.get()->print();
+   // Collision_avoidance_p = std::make_unique<TrafficSystemControl>(this->Warehouse_object, this->AGV_vehicles);
+    //Collision_avoidance_p.get()->print();
 
 }
 
@@ -87,7 +87,6 @@ void Stage::add_task_to_vehicle(int AGV_id)
           }
       }
 
-
     }
     else
     {
@@ -98,8 +97,10 @@ void Stage::add_task_to_vehicle(int AGV_id)
             std::list<int> temp_path=std::move(Warehouse_object.compute_path_Dijkstra(AGV_vehicles[AGV_id].return_current_pos(),temp_task.target));
             tasks_to_do.pop_front();
 
-            if(!temp_path.empty())
+            if(!temp_path.empty()){
                 AGV_vehicles[AGV_id].add_task(temp_task,temp_path);
+                //this->Collision_avoidance_p.get()->set_shared_path_points();
+            }
 
         }
         
