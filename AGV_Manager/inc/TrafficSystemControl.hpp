@@ -28,6 +28,8 @@ AGVs AGVs_vector;
 shared_path_points shared_points_vector;
 
 
+void clear_shared_points();
+bool find_element(int key, std::list<int> container);
 
 public:
 
@@ -35,7 +37,7 @@ public:
     TrafficSystemControl(Warehouse  &warehouse, AGVs AGVs_vector);
 
 
-    bool go_ahead() {return true;}
+    bool go_ahead(AGV agv);
     void print();
 
     void set_shared_path_points();

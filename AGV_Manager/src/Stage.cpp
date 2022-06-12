@@ -113,7 +113,7 @@ void Stage::make_moves()
 {
     for(auto& it: (*AGV_vehicles.get()))
     {
-        if(it.return_status())
+        if(it.return_status() && Collision_avoidance_p->go_ahead(it))
         {
             it.make_move();
         }
