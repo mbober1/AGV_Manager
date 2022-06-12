@@ -4,6 +4,7 @@
 #include "AGV.hpp"
 #include "Task.hpp"
 #include "inc/TrafficSystemControl.hpp"
+#include <memory>
 
 #define STAR_POSITION_1 272
 #define STAR_POSITION_2 268
@@ -14,7 +15,7 @@ enum vehicle_num
 };
 
 
-using AGVs = std::vector<AGV>;
+using AGVs = std::shared_ptr<std::vector<AGV>>;
 using Tasks = std::list<Task>;
 /*
  * Definition of Stage class that represents an entire robotic process of performing tasks by AGVs

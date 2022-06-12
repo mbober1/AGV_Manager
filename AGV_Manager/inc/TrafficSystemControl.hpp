@@ -14,7 +14,7 @@ enum class Point_State
 
 using status_points = std::list<std::pair< Point_State, int>>;
 using shared_path_points = std::vector<std::list<int>>;
-using AGVs =  std::vector<AGV>;
+using AGVs = std::shared_ptr<std::vector<AGV>>;
 /*
  * Class to handle collision protection. Created according to:
  * "Dynamic Resource Reservation Based Collision and Deadlock Prevention for Multi-AGVs"
@@ -32,7 +32,7 @@ shared_path_points shared_points_vector;
 public:
 
 
-    TrafficSystemControl(Warehouse  &warehouse, AGVs &AGVs_vector);
+    TrafficSystemControl(Warehouse  &warehouse, AGVs AGVs_vector);
 
 
     bool go_ahead() {return true;}
