@@ -27,12 +27,13 @@ class TrafficSystemControl{
 status_points points_with_status;
 AGVs AGVs_vector;
 shared_path_points shared_points_vector;
-
+std::vector<std::list<int>> paths;
 
 void clear_shared_points();
 bool find_element(int key, std::list<int> container);
 bool point_in_shared_set(int point, int agv_id);
-bool reserved_point_in_shared_set(std::list<int> container);
+bool point_in_shared_set2(int point, int agv_id, int current_point);
+bool reserved_point_in_shared_set(std::list<int> container,  int current);
 
 public:
     TrafficSystemControl(Warehouse  &warehouse, AGVs AGVs_vector);
@@ -40,7 +41,7 @@ public:
 
     bool go_ahead(AGV agv);
     void print();
-
+    void add_path(int agv_id);
     void set_shared_path_points();
 
 

@@ -101,7 +101,7 @@ void Stage::add_task_to_vehicle(int AGV_id)
 
             if(!temp_path.empty()){
                 (*AGV_vehicles.get())[AGV_id].add_task(temp_task,temp_path);
-                //this->Collision_avoidance_p.get()->set_shared_path_points();
+                this->Collision_avoidance_p.get()->add_path(AGV_id);
             }
 
         }
