@@ -12,8 +12,7 @@ TaskItem::TaskItem(QString robot, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    TaskItem::number++;
-    ui->robot_label->setText("Task #" + QString::number(TaskItem::number));
+    update_id(-1);
     ui->title_label->setText(this->assigned_to);
 }
 
@@ -36,5 +35,18 @@ void TaskItem::update_progress(int progress)
     ui->progressBar->setValue(progress);
 }
 
-
-int TaskItem::number = 0;
+void TaskItem::update_id(int id)
+{
+    if (id < 0)
+    {
+        ui->robot_label->setText("Task not assigned");
+    }
+    else if (id == 0)
+    {
+        ui->robot_label->setText("Home");
+    }
+    else
+    {
+        ui->robot_label->setText("Task #" + QString::number(id));
+    }
+}

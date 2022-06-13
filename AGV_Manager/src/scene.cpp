@@ -214,9 +214,12 @@ void Scene::animate(Robot &agv, const QPoint &next_point, const QPoint &current_
 
 void Scene::refresh_task_list()
 {
-    auto data = backend->return_task_percents();
-    emit update_task_percents(data);
-    // printf("%f, %f, %f \n", data[0], data[1], data[2]);
+    auto percents = backend->return_task_percents();
+    auto ids = backend->return_task_ids();
+
+    emit update_task_percents(percents);
+    emit update_task_ids(ids);
+    printf("%d, %d, %d\n", ids[0], ids[1],ids[2]);
 }
 
 void Scene::set_simulation_speed(int speed) 

@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
     add_list_item("AGV Blue");
 
     connect(scene, &Scene::update_task_percents, this, &MainWindow::update_task_percent);
+    connect(scene, &Scene::update_task_ids, this, &MainWindow::update_task_id);
 
 }
 
@@ -50,10 +51,16 @@ void MainWindow::add_list_item(QString robot)
 
 void MainWindow::update_task_percent(const std::vector<float> &data)
 {
-
     for (size_t i = 0; i < data.size(); i++)
     {
         list_items.at(i)->update_progress(data.at(i));
-    } 
-    
+    }
+}
+
+void MainWindow::update_task_id(const std::vector<int> &data)
+{
+    for (size_t i = 0; i < data.size(); i++)
+    {
+        list_items.at(i)->update_id(data.at(i));
+    }
 }

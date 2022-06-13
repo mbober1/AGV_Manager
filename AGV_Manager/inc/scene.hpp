@@ -31,6 +31,7 @@ private:
 
 signals:
     void update_task_percents(const std::vector<float> &data);
+    void update_task_ids(const std::vector<int> &data);
 
 public slots:
     void set_simulation_speed(int speed);

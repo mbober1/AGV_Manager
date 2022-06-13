@@ -20,6 +20,7 @@ public:
 
 public slots:
     void update_task_percent(const std::vector<float> &data);
+    void update_task_id(const std::vector<int> &data);
 
 private:
     Ui::MainWindow *ui;
