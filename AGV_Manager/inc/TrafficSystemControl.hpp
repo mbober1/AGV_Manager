@@ -31,8 +31,8 @@ std::vector<std::list<int>> paths;
 
 void clear_shared_points();
 bool find_element(int key, std::list<int> container);
-bool point_in_shared_set(int point, int agv_id);
-bool point_in_shared_set2(int point, int agv_id, int current_point);
+bool condition_1(int point, int agv_id);
+bool condition_2(int point, int agv_id, int current_point);
 bool reserved_point_in_shared_set(std::list<int> container,  int current);
 
 public:

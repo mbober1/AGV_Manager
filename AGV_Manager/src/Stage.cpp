@@ -85,14 +85,15 @@ void Stage::add_task_to_vehicle(int AGV_id)
       {
           if((*AGV_vehicles.get())[AGV_id].return_current_pos() != (*AGV_vehicles.get())[AGV_id].return_home_pos())
           {
-              this->back_to_start_position(AGV_id);
+             this->back_to_start_position(AGV_id);
+             this->Collision_avoidance_p.get()->add_path(AGV_id);
           }
       }
 
     }
     else
     {
-        if(! (*AGV_vehicles.get())[AGV_id].return_status())
+        if(! (*AGV_vehicles.get())[AGV_id].return_status() && (*AGV_vehicles.get())[AGV_id].return_current_pos() ==(*AGV_vehicles.get())[AGV_id].return_home_pos())
         {
 
             Task temp_task = tasks_to_do.front();
@@ -104,6 +105,10 @@ void Stage::add_task_to_vehicle(int AGV_id)
                 this->Collision_avoidance_p.get()->add_path(AGV_id);
             }
 
+        }
+        else{
+            this->back_to_start_position(AGV_id);
+            this->Collision_avoidance_p.get()->add_path(AGV_id);
         }
         
     }

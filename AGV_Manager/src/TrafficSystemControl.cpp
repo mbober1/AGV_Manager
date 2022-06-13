@@ -1,6 +1,8 @@
 #include "inc/TrafficSystemControl.hpp"
 #include <algorithm>
 #include "inc/Stage.hpp"
+
+
 TrafficSystemControl::TrafficSystemControl(Warehouse  &warehouse, AGVs AGVs_vector): AGVs_vector{AGVs_vector}
 {
     auto graph_size = warehouse.return_graph_size();
@@ -15,7 +17,6 @@ TrafficSystemControl::TrafficSystemControl(Warehouse  &warehouse, AGVs AGVs_vect
     {
         it.resize(AGVs_vector.get()->size());
     }
-
 
     paths.resize(AGVs_vector.get()->size());
     
@@ -52,23 +53,9 @@ void TrafficSystemControl::clear_shared_points()
 
 void TrafficSystemControl::set_shared_path_points()
 {
-    /* std::vector<std::list<int>> temp_vect; */
+
     std::list<int>::iterator end; 
-
-
     clear_shared_points();
-
-   
-/*     for(auto &it: temp_vect)
-    {
-        std::cout << std::endl;
-        for(auto &it2: it)
-            std::cout << it2 << " ";
-    } */
-
-    std::cout << std::endl;
-
-
 
     auto vect_size = paths.size();
    
@@ -96,15 +83,6 @@ void TrafficSystemControl::set_shared_path_points()
             }
         }
     }
-
-/*     for(auto &it: shared_points_vector[0][1])
-    {
-      
-  
-        std::cout << it << " ";
-    }
-        std::cout << std::endl; */
-
 }
 
 bool TrafficSystemControl::find_element(int key, std::list<int> container)
@@ -115,16 +93,11 @@ bool TrafficSystemControl::find_element(int key, std::list<int> container)
     return false;
 }
 
-bool TrafficSystemControl::point_in_shared_set(int point, int agv_id)
+bool TrafficSystemControl::condition_1(int point, int agv_id)
 {
 
     for(auto i=0u; i < shared_points_vector.size(); i++)
     {
-        for(auto &it: shared_points_vector[agv_id][i])
-        {
-            std::cout << it << " ";
-        }
-        std::cout << std::endl;
 
         if(find_element(point, shared_points_vector[agv_id][i]))
         {
@@ -135,7 +108,7 @@ bool TrafficSystemControl::point_in_shared_set(int point, int agv_id)
     return false;
 } 
 
-bool TrafficSystemControl::point_in_shared_set2(int point, int agv_id, int current_point)
+bool TrafficSystemControl::condition_2(int point, int agv_id, int current_point)
 {
 
     for(auto i=0u; i < shared_points_vector.size(); i++)
@@ -171,29 +144,22 @@ bool TrafficSystemControl::go_ahead(AGV agv)
     auto id = agv.return_id();
     auto current_point = agv.return_current_pos();
 
-  
 
-    if((!point_in_shared_set(next_point, id) ) && (points_with_status[next_point].first == Point_State::Free))
+    if((!condition_1(next_point, id) ) && (points_with_status[next_point].first == Point_State::Free))
     {
-        //std::cout << "tu" << std::endl;
         points_with_status[next_point].first = Point_State::Reserved;
         points_with_status[current_point].first = Point_State::Free;
         return true;
     }
     
-    if(!point_in_shared_set2(next_point, id, current_point))
+    if(!condition_2(next_point, id, current_point))
     {
-        //std::cout << "tu" << std::endl;
         points_with_status[next_point].first = Point_State::Reserved;
         points_with_status[current_point].first = Point_State::Free; 
         return true;
     }
     
-
-    
-
     return false;
-    
 }
 
 
