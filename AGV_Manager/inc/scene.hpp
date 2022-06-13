@@ -32,6 +32,10 @@ private:
 signals:
     void test(int progress);
 
+public slots:
+    void set_simulation_speed(int speed);
+    void timer_state(bool state);
+    
 };
 
 #endif // SCENE_HPP

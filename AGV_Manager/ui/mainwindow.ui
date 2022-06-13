@@ -26,7 +26,7 @@
    <string>Warehouse Manager</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../resources.qrc">
+   <iconset resource="resources.qrc">
     <normaloff>:/icon/resources/icons/warehouse.png</normaloff>:/icon/resources/icons/warehouse.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -40,6 +40,9 @@
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="Scene" name="widget" native="true"/>
+     </item>
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
@@ -72,14 +75,22 @@
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>22</height>
+     <height>27</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Scene</class>
+   <extends>QWidget</extends>
+   <header>inc/scene.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
-  <include location="../resources.qrc"/>
+  <include location="resources.qrc"/>
  </resources>
  <connections/>
 </ui>
