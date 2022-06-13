@@ -188,7 +188,7 @@ bool Stage::AGV_in_use(int AGV_id)
 
 float Stage::return_task_percent(int AGV_id)
 {
-    if(AGV_id > (*AGV_vehicles.get()).size())
+    if(AGV_id > (int)(*AGV_vehicles.get()).size())
     {
         std::cout << "Stage::return_task_percent:  given ID is greater than the number of vehicles " << std::endl;
         exit(1);
@@ -199,7 +199,7 @@ float Stage::return_task_percent(int AGV_id)
 
 int Stage::return_task_id(int AGV_id)
 {
-    if(AGV_id > (*AGV_vehicles.get()).size())
+    if(AGV_id > (int)(*AGV_vehicles.get()).size())
     {
         std::cout << "Stage::return_task_percent:  given ID is greater than the number of vehicles " << std::endl;
         exit(1);

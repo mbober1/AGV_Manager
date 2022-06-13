@@ -42,7 +42,7 @@ void AGV::make_move()
         this->current_pos = this->path_to_target.front();
         this->path_to_target.pop_front();
         this->task_percent = (1 - (float(this->path_to_target.size())/this->road_length))*100;
-        if(current_pos == target)
+        if(current_pos == (int)target)
         {
             in_use = false;
         }
