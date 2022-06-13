@@ -3,16 +3,19 @@
 #include "Warehouse.hpp"
 #include "AGV.hpp"
 #include "Task.hpp"
-#define STAR_POSITION 0
+#include "inc/TrafficSystemControl.hpp"
+#include <memory>
 
-
+#define STAR_POSITION_1 272
+#define STAR_POSITION_2 268
+#define STAR_POSITION_3 264
 enum vehicle_num    
 {
-    option_1 = 1, option_2, option_3, option_4
+    option_1 = 1, option_2, option_3
 };
 
 
-using AGVs = std::vector<AGV>;
+using AGVs = std::shared_ptr<std::vector<AGV>>;
 using Tasks = std::list<Task>;
 /*
  * Definition of Stage class that represents an entire robotic process of performing tasks by AGVs
@@ -22,6 +25,8 @@ class Stage{
 Warehouse Warehouse_object; 
 AGVs AGV_vehicles;
 Tasks tasks_to_do;
+std::unique_ptr<TrafficSystemControl> Collision_avoidance_p = nullptr;
+
 
 
 /*
@@ -54,6 +59,7 @@ Stage(const char * filename_warehouse, const char* filename_tasks, vehicle_num o
 void print_info();  // to print info about Stage's components
 int rows_num() {return this->Warehouse_object.rows_num();}   // returns a rows number
 int columns_num() {return this->Warehouse_object.columns_num();}    // returns a columns number
+
 
 /*
  * make_moves - performs moves by every vehicle along AGVs paths. If It does not have a path, make_moves does nothing
@@ -111,6 +117,8 @@ float return_task_percent(int AGV_id);
  * @return - task percent
  */
 int return_task_id(int AGV_id);
+
+void back_to_start_position(int AGV_id);
 
 
 };

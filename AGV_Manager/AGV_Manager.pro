@@ -16,7 +16,9 @@ SOURCES += \
     src/scene.cpp \
     src/Warehouse.cpp \
     src/Stage.cpp \
-    src/taskitem.cpp
+    src/taskitem.cpp \
+    src/TrafficSystemControl.cpp \
+   
 
 HEADERS += \
     inc/mainwindow.hpp \
@@ -27,7 +29,10 @@ HEADERS += \
     inc/taskitem.hpp \
     inc/Warehouse.hpp \
     inc/Stage.hpp \
-    inc/Dynamic2DMatrix.hpp
+    inc/Dynamic2DMatrix.hpp \
+    inc/TrafficSystemControl.hpp \
+    inc/TrafficSystemControl.hpp
+
 
 FORMS += \
     ui/mainwindow.ui \

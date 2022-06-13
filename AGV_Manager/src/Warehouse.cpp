@@ -206,3 +206,5 @@ std::list<int> Warehouse::compute_path_Dijkstra(const int start_vertex, const in
     
     return path;
 }
+
+

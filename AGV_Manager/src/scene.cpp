@@ -23,8 +23,8 @@
 
 #define WAREHOUSE_DATA ("../resources/data/warehouse.data")
 #define TASK_DATA ("../resources/data/task.data")
-// #define WAREHOUSE_DATA ("/home/mbober/Documents/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/warehouse.data")
-// #define TASK_DATA ("/home/mbober/Documents/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/task.data")
+#define WAREHOUSE_DATA ("/home/wiktor/Desktop/MGR/AGVs/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/warehouse.data")
+#define TASK_DATA ("/home/wiktor/Desktop/MGR/AGVs/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/task.data")
 #define get_backend_position(agv_id)      (warehouse_points[backend->return_current_position(agv_id)])
 
 

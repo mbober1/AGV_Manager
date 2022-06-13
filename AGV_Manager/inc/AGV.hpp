@@ -16,6 +16,7 @@ std::list<int> path_to_target;  // list including points to the target
 int road_length = 0;  // The length of the road
 float task_percent = 0; // task perform percent
 int current_task = 0;  // current task id
+int home_pos;  // start postion of AGV
 
 public:
 AGV() = delete; // to prevent using a default constructor
@@ -33,6 +34,7 @@ int return_current_pos() {return this->current_pos;}// using to return AGV curre
 bool return_status() {return this->in_use;} // returns current status of the AGV
 float return_task_percent() {return this->task_percent;} // returns current status of the AGV
 int return_task_id() {return this->current_task;} // returns current status of the AGV
+int return_home_pos() {return this->home_pos;} // returns home position of AGV
 
 void print_info(); // using to print info about AGV object
 
