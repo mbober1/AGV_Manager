@@ -188,7 +188,7 @@ bool Stage::AGV_in_use(int AGV_id)
 
 float Stage::return_task_percent(int AGV_id)
 {
-    if(AGV_id > (*AGV_vehicles.get()).size())
+    if(AGV_id > (int)(*AGV_vehicles.get()).size())
     {
         std::cout << "Stage::return_task_percent:  given ID is greater than the number of vehicles " << std::endl;
         exit(1);
@@ -196,15 +196,39 @@ float Stage::return_task_percent(int AGV_id)
     return (*AGV_vehicles.get())[AGV_id].return_task_percent();
 }
 
+std::vector<float> Stage::return_task_percents() 
+{
+    std::vector<float> results;
+
+    for(auto& it: (*AGV_vehicles.get()))
+    {
+        results.push_back(it.return_task_percent());
+    } 
+
+    return results;
+}
+
 
 int Stage::return_task_id(int AGV_id)
 {
-    if(AGV_id > (*AGV_vehicles.get()).size())
+    if(AGV_id > (int)(*AGV_vehicles.get()).size())
     {
         std::cout << "Stage::return_task_percent:  given ID is greater than the number of vehicles " << std::endl;
         exit(1);
     }
     return (*AGV_vehicles.get())[AGV_id].return_task_id();
+}
+
+std::vector<int> Stage::return_task_ids() 
+{
+    std::vector<int> results;
+
+    for(auto& it: (*AGV_vehicles.get()))
+    {
+        results.push_back(it.return_task_id());
+    } 
+    
+    return results;
 }
 
 void Stage::back_to_start_position(int AGV_id)

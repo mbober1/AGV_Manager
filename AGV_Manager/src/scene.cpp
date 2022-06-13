@@ -23,8 +23,6 @@
 
 #define WAREHOUSE_DATA ("../resources/data/warehouse.data")
 #define TASK_DATA ("../resources/data/task.data")
-#define WAREHOUSE_DATA ("/home/wiktor/Desktop/MGR/AGVs/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/warehouse.data")
-#define TASK_DATA ("/home/wiktor/Desktop/MGR/AGVs/PWR_Algorytmy_optymalizacji/AGV_Manager/resources/data/task.data")
 #define get_backend_position(agv_id)      (warehouse_points[backend->return_current_position(agv_id)])
 
 
@@ -133,6 +131,7 @@ void Scene::animation_update()
     if (make_move == true)
     {
         backend->make_moves();
+        refresh_task_list();
     }
 
     for (Robot &agv : this->robots_list)
@@ -142,7 +141,6 @@ void Scene::animation_update()
             case Robot_State::READY: // skończył zadanie
             {
                 backend->add_task_to_vehicle(agv.get_id());
-                refresh_task_list();
 
                 auto new_path = backend->return_path(agv.get_id());
                 agv.set_path(new_path, warehouse_points);
@@ -216,7 +214,12 @@ void Scene::animate(Robot &agv, const QPoint &next_point, const QPoint &current_
 
 void Scene::refresh_task_list()
 {
+    auto percents = backend->return_task_percents();
+    auto ids = backend->return_task_ids();
 
+    emit update_task_percents(percents);
+    emit update_task_ids(ids);
+    printf("%d, %d, %d\n", ids[0], ids[1],ids[2]);
 }
 
 void Scene::set_simulation_speed(int speed) 

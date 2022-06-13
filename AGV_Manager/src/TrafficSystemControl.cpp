@@ -57,7 +57,7 @@ void TrafficSystemControl::set_shared_path_points()
     std::list<int>::iterator end; 
     clear_shared_points();
 
-    auto vect_size = paths.size();
+    int vect_size = paths.size();
    
     for(auto i = 0; i < vect_size; i++)
     {

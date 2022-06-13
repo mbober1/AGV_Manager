@@ -16,11 +16,10 @@ class TaskItem : public QWidget
 public:
     explicit TaskItem(QString robot, QWidget *parent = nullptr);
     ~TaskItem();
-    static int number;
-    static int dupa;
 
 public slots:
     void update_progress(int progress);
+    void update_id(int id);
 
 private:
     Ui::TaskItem *ui;
