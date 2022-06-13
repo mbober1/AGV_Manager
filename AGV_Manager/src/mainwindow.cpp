@@ -29,7 +29,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(scene, &Scene::update_task_percents, this, &MainWindow::update_task_percent);
     connect(scene, &Scene::update_task_ids, this, &MainWindow::update_task_id);
-
 }
 
 MainWindow::~MainWindow()

@@ -92,13 +92,6 @@ void Scene::paintEvent(QPaintEvent *event)
         painter.setPen(QPen(agv.MainColor, LINE_SIZE, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
         painter.setBrush(QBrush(agv.MainColor));
         painter.drawEllipse(agv.get_position(), ROBOT_POINT_SIZE, ROBOT_POINT_SIZE);
-
-        // debug
-        // for (auto &point : warehouse_points)
-        // {
-        //     painter.setBrush(QBrush(WAREHOUSE_POINT_COLOR));
-        //     painter.drawEllipse(point, 5, 5);
-        // }
     }
 
 }
@@ -219,7 +212,6 @@ void Scene::refresh_task_list()
 
     emit update_task_percents(percents);
     emit update_task_ids(ids);
-    printf("%d, %d, %d\n", ids[0], ids[1],ids[2]);
 }
 
 void Scene::set_simulation_speed(int speed) 
