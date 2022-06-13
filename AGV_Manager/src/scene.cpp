@@ -131,6 +131,7 @@ void Scene::animation_update()
     if (make_move == true)
     {
         backend->make_moves();
+        refresh_task_list();
     }
 
     for (Robot &agv : this->robots_list)
@@ -140,7 +141,6 @@ void Scene::animation_update()
             case Robot_State::READY: // skończył zadanie
             {
                 backend->add_task_to_vehicle(agv.get_id());
-                refresh_task_list();
 
                 auto new_path = backend->return_path(agv.get_id());
                 agv.set_path(new_path, warehouse_points);
@@ -214,7 +214,9 @@ void Scene::animate(Robot &agv, const QPoint &next_point, const QPoint &current_
 
 void Scene::refresh_task_list()
 {
-
+    auto data = backend->return_task_percents();
+    emit update_task_percents(data);
+    // printf("%f, %f, %f \n", data[0], data[1], data[2]);
 }
 
 void Scene::set_simulation_speed(int speed) 

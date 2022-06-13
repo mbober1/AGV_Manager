@@ -19,7 +19,7 @@ public:
     void add_list_item(QString robot);
 
 public slots:
-    void test(int progress);
+    void update_task_percent(const std::vector<float> &data);
 
 private:
     Ui::MainWindow *ui;

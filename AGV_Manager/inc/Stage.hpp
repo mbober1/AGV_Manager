@@ -111,12 +111,14 @@ bool AGV_in_use(int AGV_id);
  * @return - task percent
  */
 float return_task_percent(int AGV_id);
+std::vector<float> return_task_percents();
 
 /*
  * Method to return task id of particular AGV
  * @return - task percent
  */
 int return_task_id(int AGV_id);
+std::vector<int> return_task_ids();
 
 void back_to_start_position(int AGV_id);
 

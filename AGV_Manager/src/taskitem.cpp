@@ -13,8 +13,8 @@ TaskItem::TaskItem(QString robot, QWidget *parent) :
     ui->setupUi(this);
 
     TaskItem::number++;
-    ui->title_label->setText("Task #" + QString::number(TaskItem::number));
-    ui->robot_label->setText(this->assigned_to);
+    ui->robot_label->setText("Task #" + QString::number(TaskItem::number));
+    ui->title_label->setText(this->assigned_to);
 }
 
 
